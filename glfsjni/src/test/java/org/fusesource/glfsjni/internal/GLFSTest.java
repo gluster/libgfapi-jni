@@ -47,9 +47,20 @@ public class GLFSTest extends TestCase {
 
     @Test
     public void testInit() throws IOException {
-        long vol1 = glfs_new("vol1");
-        glfs_init(vol1);
-        glfs_fini(vol1);
+        long foo = glfs_new("foo");
+        glfs_set_logging(foo, "glfsjni.log", 7);
+
+        glfs_set_volfile_server(foo, "tcp", "127.0.2.1", 24007);
+        
+        glfs_init(foo);
+
+        long bar = glfs_creat(foo, "bar", 0, 0);
+
+        String hi = "hello world";
+        glfs_write(bar, hi, hi.length(), 0);
+        
+        
+        glfs_fini(foo);
     }
 
 }

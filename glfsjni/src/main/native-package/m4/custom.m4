@@ -36,16 +36,16 @@ dnl  AC_LANG_PUSH(C++)
 dnl
 dnl  AC_CHECK_HEADER([pthread.h],[AC_DEFINE([HAVE_PTHREAD_H], [1], [Define to 1 if you have the <pthread.h> header file.])])
 dnl
-dnl  AC_ARG_WITH([glfs],
-dnl  [AS_HELP_STRING([--with-glfs@<:@=PATH@:>@],
-dnl    [Directory where glfs was built. Example: --with-glfs=/opt/glfs])],
-dnl  [
-dnl    CFLAGS="$CFLAGS -I${withval}/include"
-dnl    CXXFLAGS="$CXXFLAGS -I${withval}/include"
-dnl    AC_SUBST(CXXFLAGS)
-dnl    LDFLAGS="$LDFLAGS -lglfs -L${withval}"
-dnl    AC_SUBST(LDFLAGS)
-dnl  ])
+AC_ARG_WITH([glfs],
+[AS_HELP_STRING([--with-glfs@<:@=PATH@:>@],
+  [Directory where glfs was built. Example: --with-glfs=/opt/glfs])],
+[
+  CFLAGS="$CFLAGS -I${withval}/include"
+  CXXFLAGS="$CXXFLAGS -I${withval}/include"
+  AC_SUBST(CXXFLAGS)
+  LDFLAGS="$LDFLAGS -lgfapi -L${withval}"
+  AC_SUBST(LDFLAGS)
+])
 dnl
 dnl  AC_CHECK_HEADER([glfs/db.h],,AC_MSG_ERROR([cannot find headers for glfs]))
 dnl

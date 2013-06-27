@@ -72,4 +72,49 @@ public class GLFS {
             @JniArg(cast="glfs_t *") long fs
             );
 
+//    int glfs_set_volfile (glfs_t *fs, const char *volfile);
+
+//    int glfs_set_volfile_server (glfs_t *fs, const char *transport,
+//                                 const char *host, int port);
+    
+    @JniMethod
+    static final native int glfs_set_volfile_server(
+            @JniArg(cast="glfs_t *") long fs,
+            @JniArg(cast="const char*")
+            String transport,
+            @JniArg(cast="const char*")
+            String host,
+            int port
+    );
+
+//    int glfs_set_logging (glfs_t *fs, const char *logfile, int loglevel);
+
+    @JniMethod
+    static final native int glfs_set_logging (
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast="const char*")
+            String logfile,
+            int loglevel);
+
+    @JniMethod(cast = "glfs_fd_t *")
+    static final native long glfs_creat (
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast="const char*")
+            String path,
+            int flags,
+            int mode);
+
+    @JniMethod
+    static final native int glfs_close (
+            @JniArg(cast = "glfs_fd_t *") long fd);
+
+//    ssize_t glfs_write (glfs_fd_t *fd, const void *buf, size_t count, int flags);
+
+    @JniMethod
+    static final native int glfs_write (
+            @JniArg(cast = "glfs_fd_t *") long fd,
+            @JniArg(cast="const char*") String buf,
+            int count,
+            int flags);
+
 }
