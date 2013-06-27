@@ -8,15 +8,15 @@ JNI interface to the glfs API.
 
 ### maven
 
-Get maven set up and do a first run with the *download* profile to let maven fetch all the dependencies.  Once the deps  
-are downloaded we won't need the *download* profile anymore.  Run this to fetch the deps, but expect failures, and then  
+Get maven set up and do a first run with the *download* profile to let maven fetch all the dependencies.  Once the deps 
+are downloaded we won't need the *download* profile anymore.  Run this to fetch the deps, but expect failures, and then 
 move on.
 
         mvn -Pdownload -Pfull clean install
 
 ### glusterfs source
 
-You'll need the glusterfs source, configured and built, in a directory.  You don't need to install from the source though.  
+You'll need the glusterfs source, configured and built, in a directory.  You don't need to install from the source though. 
 Later we'll need a running installation of glusterfs, but that can be from a package instead of the source.
 
 - Compile the glusterfs source (configure & make).  We'll refer to the source tree root as <gluster>
