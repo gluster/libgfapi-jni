@@ -6,30 +6,25 @@ Java Native Interface (JNI) bindings for libgfapi, the GlusterFS client API.
 
 ## groundwork
 
-### maven
+### Prerequisites
 
-Get maven set up and do a first run with the *download* profile to let maven fetch all the dependencies.  Once the deps 
-are downloaded we won't need the *download* profile anymore.  Run this to fetch the deps, but expect failures, and then 
-move on.
+* gluster 3.4 or newer - installed from source or a gluster development package installed.
+* maven 3.0.3 or newer
+* auto tool chain
 
-        mvn -Pdownload -Pfull clean install
+## Compiling without tests
 
-### glusterfs source
+If you have installed gluster to non-standard location then you export `GLFS_HOME` so we know where it's at:
 
-You'll need the glusterfs source, configured and built, in a directory.  You don't need to install from the source though. 
-Later we'll need a running installation of glusterfs, but that can be from a package instead of the source.
+    export GLFS_HOME=/path/to/gluster/prefix
 
-- Compile the glusterfs source (configure & make).  We'll refer to the source tree root as <gluster>
+Building without tests is simple.  Just run:
 
-- Set the *GLFS_HOME* environment variable to point to the libgfapi source directory
+    mvn -Pdownlaod -Plinux64 -Dmaven.test.skip=true install
 
-        export GLFS_HOME=<gluster>/api/src/
+## Compiling and Testing
 
-## the real test
-
-To really test this you'll need a running glusterfs installation, version 3.4.
-
-You could install from the source compiled above, or you could install a package for the running glusterfs.
+To really test this you'll need a running glusterfs volume called *foo*.
 
 - Set up a loopback interface alias, because glusterfs refuses to create a volume with a brick on *localhost* or *127.0.0.1*
 
@@ -38,10 +33,14 @@ You could install from the source compiled above, or you could install a package
 - Create a glusterfs volume called *foo*
 
         gluster volume create foo 127.0.2.1:/var/tmp/foo
+        gluster volume start foo
 
-- Gluster requires that clients communicate from privileged source ports, so we need to execute the test with sudo
+- Gluster requires that clients communicate from privileged source ports, so we need to build and test with sudo.  You also need to 
+make sure that the gluster libs are on the LD_LIBRARY_PATH.
 
-        sudo -E mvn -Plinux64 install
+        sudo bash
+        export LD_LIBRARY_PATH=${GLUSTER_PREFIX}/lib
+        mvn -Pdownlaod -Plinux64 install
 
 - If successful, the test will have created a file called *bar* in the volume, and written *hello world* into it.
 

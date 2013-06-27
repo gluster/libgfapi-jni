@@ -32,32 +32,27 @@ dnl ---------------------------------------------------------------------------
 
 AC_DEFUN([CUSTOM_M4_SETUP],
 [
-dnl  AC_LANG_PUSH(C++)
-dnl
-dnl  AC_CHECK_HEADER([pthread.h],[AC_DEFINE([HAVE_PTHREAD_H], [1], [Define to 1 if you have the <pthread.h> header file.])])
-dnl
-AC_ARG_WITH([glfs],
-[AS_HELP_STRING([--with-glfs@<:@=PATH@:>@],
-  [Directory where glfs was built. Example: --with-glfs=/opt/glfs])],
-[
-  CFLAGS="$CFLAGS -I${withval}/include"
-  CXXFLAGS="$CXXFLAGS -I${withval}/include"
-  AC_SUBST(CXXFLAGS)
-  LDFLAGS="$LDFLAGS -lgfapi -L${withval}"
-  AC_SUBST(LDFLAGS)
-])
-dnl
-dnl  AC_CHECK_HEADER([glfs/db.h],,AC_MSG_ERROR([cannot find headers for glfs]))
-dnl
-dnl  AC_ARG_WITH([snappy],
-dnl  [AS_HELP_STRING([--with-snappy@<:@=PATH@:>@],
-dnl    [Directory where snappy was built. Example: --with-snappy=/opt/snappy])],
-dnl  [
-dnl    LDFLAGS="$LDFLAGS -lsnappy -L${withval}"
-dnl    AC_SUBST(LDFLAGS)
-dnl  ])
-dnl
-dnl  AC_CHECK_HEADER([sys/errno.h],[AC_DEFINE([HAVE_SYS_ERRNO_H], [1], [Define to 1 if you have the <sys/errno.h> header file.])])
-dnl
-dnl  AC_LANG_POP()
+  AC_ARG_WITH([glfs],
+    [AS_HELP_STRING([--with-glfs@<:@=PATH@:>@],
+    [Directory where glfs was built. Example: --with-glfs=/opt/glfs])],
+    [
+      if test "$withval" = "no" || test "$withval" = "yes"; then
+        AC_MSG_ERROR([--with-glfs: PATH to Gluster installation not supplied])
+      fi
+      
+      CFLAGS="$CFLAGS -I${withval}/include"
+      CXXFLAGS="$CXXFLAGS -I${withval}/include"
+      AC_SUBST(CXXFLAGS)
+      LDFLAGS="$LDFLAGS -lgfapi -L${withval}/lib"
+      AC_SUBST(LDFLAGS)
+    ],[
+    ]
+  )
+  
+  dnl 
+  dnl Lets validate that the headers and libs can be used and built against.
+  dnl
+  AC_CHECK_HEADER([glusterfs/api/glfs.h],,AC_MSG_ERROR([cannot find headers for glfs.h]))
+  AC_CHECK_LIB([gfapi],[glfs_new],,AC_MSG_ERROR([cannot find the glfs library]))
+  
 ])
