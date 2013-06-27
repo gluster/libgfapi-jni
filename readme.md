@@ -1,6 +1,6 @@
-# glfsjni
+# libgfapi-jni
 
-JNI interface to the glfs API.
+Java Native Interface (JNI) bindings for libgfapi, the GlusterFS client API.
 
 # instructions
 
