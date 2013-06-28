@@ -41,7 +41,7 @@ import static org.fusesource.glfsjni.internal.GLFS.*;
 /**
  * A Unit test for the GLFS class implementation.
  *
- * @author <a href="http://hiramchirino.com">Hiram Chirino</a>
+ * @author <a href="http://hiramchirino.com">Hiram Chirino</a> & <a href="http://about.me/louiszuckerman">Louis Zuckerman</a>
  */
 public class GLFSTest extends TestCase {
 
@@ -57,7 +57,7 @@ public class GLFSTest extends TestCase {
         long bar = glfs_creat(foo, "bar", 0, 0);
 
         String hi = "hello world";
-        glfs_write(bar, hi, hi.length(), 0);
+        glfs_write(bar, hi.getBytes(), hi.length(), 0);
         
         
         glfs_fini(foo);
