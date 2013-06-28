@@ -37,14 +37,16 @@ To really test this you'll need a running glusterfs volume called *foo*.
 
 - Gluster requires that clients communicate from privileged source ports by default, so we need to disable this feature before testing.
 
-        gluster volume set foo server.allow-insecure on
-
-We also need to manually fix glusterd, since it is not affected by the previous volume configuration command.  Edit /etc/glusterfs/glusterd.vol 
-and add this line after the other option statements in the volume management stanza
+    - First we need to manually fix glusterd.  Edit /etc/glusterfs/glusterd.vol and add this line after the other option statements in the volume management stanza
 
         option rpc-auth-allow-insecure on
+        service glusterfs-server restart
 
-Finally, since our clients will not be privileged, we need to make the volume world writable the usual way
+    - Second we need to allow insecure clients to access the bricks
+
+        gluster volume set foo server.allow-insecure on
+
+    - Finally, since our clients will not be privileged, we need to make the volume world writable the usual way
 
         mkdir /mnt/foo
         mount -t glusterfs localhost:foo /mnt/foo
