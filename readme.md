@@ -35,12 +35,30 @@ To really test this you'll need a running glusterfs volume called *foo*.
         gluster volume create foo 127.0.2.1:/var/tmp/foo
         gluster volume start foo
 
-- Gluster requires that clients communicate from privileged source ports, so we need to build and test with sudo.  You also need to 
-make sure that the gluster libs are on the LD_LIBRARY_PATH.
+- Gluster requires that clients communicate from privileged source ports by default, so we need to disable this feature before testing.
 
-        sudo bash
+        gluster volume set foo server.allow-insecure on
+
+We also need to manually fix glusterd, since it is not affected by the previous volume configuration command.  Edit /etc/glusterfs/glusterd.vol 
+and add this line after the other option statements in the volume management stanza
+
+        option rpc-auth-allow-insecure on
+
+Finally, since our clients will not be privileged, we need to make the volume world writable the usual way
+
+        mkdir /mnt/foo
+        mount -t glusterfs localhost:foo /mnt/foo
+        chmod ugo+rwx /mnt/foo
+        umount /mnt/foo
+        rmdir /mnt/foo
+
+- Make sure that the gluster libs are on the LD_LIBRARY_PATH.
+
         export LD_LIBRARY_PATH=${GLUSTER_PREFIX}/lib
-        mvn -Pdownlaod -Plinux64 install
+
+- Now run the test
+
+        mvn -Pdownload -Plinux64 install
 
 - If successful, the test will have created a file called *bar* in the volume, and written *hello world* into it.
 
