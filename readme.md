@@ -39,20 +39,20 @@ To really test this you'll need a running glusterfs volume called *foo*.
 
     - First we need to manually fix glusterd.  Edit /etc/glusterfs/glusterd.vol and add this line after the other option statements in the volume management stanza
 
-        option rpc-auth-allow-insecure on
-        service glusterfs-server restart
+            option rpc-auth-allow-insecure on
+            service glusterfs-server restart
 
     - Second we need to allow insecure clients to access the bricks
 
-        gluster volume set foo server.allow-insecure on
+            gluster volume set foo server.allow-insecure on
 
     - Finally, since our clients will not be privileged, we need to make the volume world writable the usual way
 
-        mkdir /mnt/foo
-        mount -t glusterfs localhost:foo /mnt/foo
-        chmod ugo+rwx /mnt/foo
-        umount /mnt/foo
-        rmdir /mnt/foo
+            mkdir /mnt/foo
+            mount -t glusterfs localhost:foo /mnt/foo
+            chmod ugo+rwx /mnt/foo
+            umount /mnt/foo
+            rmdir /mnt/foo
 
 - Make sure that the gluster libs are on the LD_LIBRARY_PATH.
 
