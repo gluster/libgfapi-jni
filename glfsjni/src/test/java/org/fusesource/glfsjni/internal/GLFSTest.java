@@ -31,8 +31,9 @@
  */
 package org.fusesource.glfsjni.internal;
 
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.testng.annotations.Test;
+import static org.testng.AssertJUnit.*;
+
 import static org.fusesource.glfsjni.internal.GLFS.*;
 
 /**
@@ -40,7 +41,7 @@ import static org.fusesource.glfsjni.internal.GLFS.*;
  *
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a> & <a href="http://about.me/louiszuckerman">Louis Zuckerman</a>
  */
-public class GLFSTest extends TestCase {
+public class GLFSTest {
 
     public static final String PATH = "bar";
     public static final String HELLO_WORLD = "hello world";
@@ -54,40 +55,36 @@ public class GLFSTest extends TestCase {
         assertTrue(0 < vol);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testNew")
     public void testSetlog() {
-        testNew();
         int setlog = glfs_set_logging(vol, "glfsjni.log", 7);
         System.out.println("SETLOG: " + setlog);
         assertEquals(0, setlog);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testSetlog")
     public void testServer() {
-        testSetlog();
         int server = glfs_set_volfile_server(vol, "tcp", "127.0.2.1", 24007);
         System.out.println("SERVER: " + server);
         assertEquals(0, server);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testServer")
     public void testInit() {
-        testServer();
         int init = glfs_init(vol);
         System.out.println("INIT: " + init);
         assertEquals(0, init);
     }
 
-    @Test
-    public void testOpen() {
-        testInit();
+    @Test(dependsOnMethods = "testInit")
+    public void testOpen_nonExisting() {
         file = glfs_open(vol, PATH, 0);
         System.out.println("OPEN: " + file);
+        assertEquals(0, file);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testOpen_nonExisting")
     public void testCreate() {
-        testOpen();
         if (0 == file) {
             file = glfs_creat(vol, PATH, 0, 0666);
             System.out.println("CREAT: " + file);
@@ -97,9 +94,8 @@ public class GLFSTest extends TestCase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = "testCreate")
     public void testWrite() {
-        testCreate();
         if (0 < file) {
             int length = HELLO_WORLD.length();
             int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
@@ -112,9 +108,8 @@ public class GLFSTest extends TestCase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = "testWrite")
     public void testSeek() {
-        testWrite();
         if (0 < file) {
             int seek = glfs_lseek(file, 0, 0);
             System.out.println("SEEK: " + seek);
@@ -124,9 +119,8 @@ public class GLFSTest extends TestCase {
         }
     }
     
-    @Test
+    @Test(dependsOnMethods = "testSeek")
     public void testRead() {
-        testSeek();
         if (0 < file) {
             int length = HELLO_WORLD.length();
             byte[] content = new byte[length];
@@ -143,38 +137,32 @@ public class GLFSTest extends TestCase {
         }
     }
 
-//    @Test
-//    public void testFromGfid() {
-//        testRead();
-//        long glfs = glfs_from_gfid(file);     //-- Can't find symbol?!
-//        System.out.println("GLFS_GFID: " + glfs);
-//        assertEquals(vol, glfs);
-//    }
+    @Test(dependsOnMethods = "testRead")
+    public void testFromGlfd() {
+        long glfs = glfs_from_glfd(file);
+        System.out.println("GLFS_GLFD: " + glfs);
+        assertEquals(vol, glfs);
+    }
 
-    @Test
+    @Test(dependsOnMethods = "testFromGlfd")
     public void testClose() {
-//        testFromGfid();
-//        testWrite();
-        testRead();
         if (0 < file) {
             int close = glfs_close(file);
             System.out.println("CLOSE: " + close);
-//            assertEquals(0, close);  //-- Sometimes -1 other times 0 -- why?
+            assertEquals(0, close);
         } else {
             System.out.println("No file to close");
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = "testClose")
     public void testUnlink() {
-        testClose();
         int unl = glfs_unlink(vol, PATH);
         System.out.println("UNLINK: " + unl);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testUnlink")
     public void testFini() {
-        testUnlink();
         int fini = glfs_fini(vol);
         System.out.println("FINI: " + fini);
         assertEquals(-1, fini);

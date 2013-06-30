@@ -74,12 +74,13 @@
   </developers>
   
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
+      <dependency>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+          <version>6.8.5</version>
+          <scope>test</scope>
+          <!--<classifier>jdk15</classifier>-->
+      </dependency>
   </dependencies>
   
   <build>

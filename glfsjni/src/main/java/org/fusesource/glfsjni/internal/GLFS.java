@@ -93,7 +93,7 @@ public class GLFS {
             @JniArg(cast = "glfs_fd_t *") long fd);
 
     @JniMethod(cast = "glfs_t *")
-    static final native int glfs_from_gfid(
+    static final native long glfs_from_glfd(
             @JniArg(cast = "glfs_fd_t *") long fd);
 
     @JniMethod
