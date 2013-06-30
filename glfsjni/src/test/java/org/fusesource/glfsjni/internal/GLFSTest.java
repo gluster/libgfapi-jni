@@ -34,7 +34,7 @@ package org.fusesource.glfsjni.internal;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.util.Arrays;
 
 import static org.fusesource.glfsjni.internal.GLFS.*;
 
@@ -45,22 +45,129 @@ import static org.fusesource.glfsjni.internal.GLFS.*;
  */
 public class GLFSTest extends TestCase {
 
+    public static final String PATH = "bar";
+    public static final String HELLO_WORLD = "hello world";
+    private long vol;
+    private long file;
+
     @Test
-    public void testInit() throws IOException {
-        long foo = glfs_new("foo");
-        glfs_set_logging(foo, "glfsjni.log", 7);
+    public void testNew() {
+        vol = glfs_new("foo");
+        System.out.println("NEW: " + vol);
+        assertTrue(0 < vol);
+    }
 
-        glfs_set_volfile_server(foo, "tcp", "127.0.2.1", 24007);
-        
-        glfs_init(foo);
+    @Test
+    public void testSetlog() {
+        testNew();
+        int setlog = glfs_set_logging(vol, "glfsjni.log", 7);
+        System.out.println("SETLOG: " + setlog);
+        assertEquals(0, setlog);
+    }
 
-        long bar = glfs_creat(foo, "bar", 0, 0);
+    @Test
+    public void testServer() {
+        testSetlog();
+        int server = glfs_set_volfile_server(vol, "tcp", "127.0.2.1", 24007);
+        System.out.println("SERVER: " + server);
+        assertEquals(0, server);
+    }
 
-        String hi = "hello world";
-        glfs_write(bar, hi, hi.length(), 0);
-        
-        
-        glfs_fini(foo);
+    @Test
+    public void testInit() {
+        testServer();
+        int init = glfs_init(vol);
+        System.out.println("INIT: " + init);
+        assertEquals(0, init);
+    }
+
+    @Test
+    public void testOpen() {
+        testInit();
+        file = glfs_open(vol, PATH, 0);
+        System.out.println("OPEN: " + file);
+    }
+
+    @Test
+    public void testCreate() {
+        testOpen();
+        if (0 == file) {
+            file = glfs_creat(vol, PATH, 0, 0);
+            System.out.println("CREAT: " + file);
+            assertTrue(file > 0);
+        } else {
+            System.out.println("File exists, not creating.");
+        }
+    }
+
+    @Test
+    public void testWrite() {
+        testCreate();
+        if (0 < file) {
+            int length = HELLO_WORLD.length();
+            int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
+            
+            System.out.println("WRITE: " + write);
+            
+            assertEquals(length, write);
+        } else {
+            System.out.println("No file to write to");
+        }
+    }
+    
+//    @Test
+//    public void testRead() {
+//        testWrite();
+//        if (0 < file) {
+//            int length = HELLO_WORLD.length();
+//            byte[] content = new byte[length];
+//            long read = glfs_read(file, content, length, 0);  //-- Doesn't modify array values
+//            
+//            String readValue = new String(content);
+//            System.out.println("READ val: " + readValue);
+//            System.out.println("READ len: " + read);
+//            
+//            assertEquals(length, read);
+//            assertEquals(HELLO_WORLD, readValue);
+//        } else {
+//            System.out.println("No file to read from");
+//        }
+//    }
+
+//    @Test
+//    public void testFromGfid() {
+//        testRead();
+//        long glfs = glfs_from_gfid(file);     //-- Can't find symbol?!
+//        System.out.println("GLFS_GFID: " + glfs);
+//        assertEquals(vol, glfs);
+//    }
+
+    @Test
+    public void testClose() {
+//        testFromGfid();
+        testWrite();
+        if (0 < file) {
+            int close = glfs_close(file);
+            System.out.println("CLOSE: " + close);
+//            assertEquals(0, close);  //-- Sometimes -1 other times 0 -- why?
+        } else {
+            System.out.println("No file to close");
+        }
+    }
+
+    @Test
+    public void testUnlink() {
+        testClose();
+        int unl = glfs_unlink(vol, PATH);
+        System.out.println("UNLINK: " + unl);
+    }
+
+    @Test
+    public void testFini() {
+        testUnlink();
+        int fini = glfs_fini(vol);
+        System.out.println("FINI: " + fini);
+        assertEquals(-1, fini);
     }
 
 }

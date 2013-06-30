@@ -64,13 +64,20 @@
       <url>http://hiramchirino.com</url>
       <timezone>GMT-5</timezone>
     </developer>
+    <developer>
+      <id>zuckerman</id>
+      <name>Louis Zuckerman</name>
+      <email>me@louiszuckerman.com</email>
+      <url>http://about.me/louiszuckerman</url>
+      <timezone>GMT-5</timezone>
+    </developer>
   </developers>
   
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.7</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

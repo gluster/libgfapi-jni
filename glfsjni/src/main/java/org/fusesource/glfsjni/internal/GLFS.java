@@ -31,10 +31,8 @@
  */
 package org.fusesource.glfsjni.internal;
 
-import org.fusesource.hawtjni.runtime.JniArg;
-import org.fusesource.hawtjni.runtime.JniClass;
-import org.fusesource.hawtjni.runtime.JniMethod;
-import org.fusesource.hawtjni.runtime.Library;
+import org.fusesource.hawtjni.runtime.*;
+import static org.fusesource.hawtjni.runtime.ArgFlag.*;
 
 /**
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a> & <a href="http://about.me/louiszuckerman">Louis Zuckerman</a>
@@ -48,65 +46,75 @@ public class GLFS {
         GLFS.LIBRARY.load();
     }
 
-    // glfs_t *glfs_new (const char *volname);
     @JniMethod(cast = "glfs_t *")
     static final native long glfs_new(
-            @JniArg(cast="const char*")
-            String volname
-            );
+            @JniArg(cast = "const char*") String volname
+    );
 
     @JniMethod
-    static final native int glfs_init (
-            @JniArg(cast="glfs_t *") long fs
-            );
-
-    @JniMethod
-    static final native int glfs_fini (
-            @JniArg(cast="glfs_t *") long fs
-            );
-
-//    int glfs_set_volfile (glfs_t *fs, const char *volfile);
-
-//    int glfs_set_volfile_server (glfs_t *fs, const char *transport,
-//                                 const char *host, int port);
-    
-    @JniMethod static final native int glfs_set_volfile_server(
-            @JniArg(cast="glfs_t *") long fs,
-            @JniArg(cast="const char*") String transport,
-            @JniArg(cast="const char*")
-            String host,
+    static final native int glfs_set_volfile_server(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char*") String transport,
+            @JniArg(cast = "const char*") String host,
             int port
     );
 
-//    int glfs_set_logging (glfs_t *fs, const char *logfile, int loglevel);
-
     @JniMethod
-    static final native int glfs_set_logging (
+    static final native int glfs_set_logging(
             @JniArg(cast = "glfs_t *") long fs,
-            @JniArg(cast="const char*")
-            String logfile,
+            @JniArg(cast = "const char*") String logfile,
             int loglevel);
 
+    @JniMethod
+    static final native int glfs_init(
+            @JniArg(cast = "glfs_t *") long fs
+    );
+
+    @JniMethod
+    static final native int glfs_fini(
+            @JniArg(cast = "glfs_t *") long fs
+    );
+
     @JniMethod(cast = "glfs_fd_t *")
-    static final native long glfs_creat (
+    static final native long glfs_open(
             @JniArg(cast = "glfs_t *") long fs,
-            @JniArg(cast="const char*")
-            String path,
+            @JniArg(cast = "const char*") String path,
+            int flags);
+
+    @JniMethod(cast = "glfs_fd_t *")
+    static final native long glfs_creat(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char*") String path,
             int flags,
             int mode);
 
     @JniMethod
-    static final native int glfs_close (
+    static final native int glfs_close(
             @JniArg(cast = "glfs_fd_t *") long fd);
 
-//    ssize_t glfs_write (glfs_fd_t *fd, const void *buf, size_t count, int flags);
+    @JniMethod(cast = "glfs_t *")
+    static final native int glfs_from_gfid(
+            @JniArg(cast = "glfs_fd_t *") long fd);
 
     @JniMethod
-    static final native int glfs_write (
+    static final native int glfs_write(
             @JniArg(cast = "glfs_fd_t *") long fd,
-            @JniArg(cast="const char*") String buf,
+            @JniArg(cast = "const char*", flags = NO_OUT) byte[] buf,
             int count,
             int flags);
 
+    @JniMethod(cast = "ssize_t")
+    static final native long glfs_read(
+            @JniArg(cast = "glfs_fd_t *") long fd,
+            @JniArg(cast = "void *", flags = NO_IN) byte[] buf,
+            @JniArg(cast = "size_t") long count,
+            int flags
+    );
+
+
+    @JniMethod
+    static final native int glfs_unlink(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path);
 
 }
