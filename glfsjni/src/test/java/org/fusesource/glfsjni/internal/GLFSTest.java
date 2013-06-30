@@ -33,9 +33,6 @@ package org.fusesource.glfsjni.internal;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-
-import java.util.Arrays;
-
 import static org.fusesource.glfsjni.internal.GLFS.*;
 
 /**
@@ -92,7 +89,7 @@ public class GLFSTest extends TestCase {
     public void testCreate() {
         testOpen();
         if (0 == file) {
-            file = glfs_creat(vol, PATH, 0, 0);
+            file = glfs_creat(vol, PATH, 0, 0666);
             System.out.println("CREAT: " + file);
             assertTrue(file > 0);
         } else {
@@ -106,33 +103,45 @@ public class GLFSTest extends TestCase {
         if (0 < file) {
             int length = HELLO_WORLD.length();
             int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
-            
+
             System.out.println("WRITE: " + write);
-            
+
             assertEquals(length, write);
         } else {
             System.out.println("No file to write to");
         }
     }
+
+    @Test
+    public void testSeek() {
+        testWrite();
+        if (0 < file) {
+            int seek = glfs_lseek(file, 0, 0);
+            System.out.println("SEEK: " + seek);
+            assertEquals(0, seek);
+        } else {
+            System.out.println("No file to seek");
+        }
+    }
     
-//    @Test
-//    public void testRead() {
-//        testWrite();
-//        if (0 < file) {
-//            int length = HELLO_WORLD.length();
-//            byte[] content = new byte[length];
-//            long read = glfs_read(file, content, length, 0);  //-- Doesn't modify array values
-//            
-//            String readValue = new String(content);
-//            System.out.println("READ val: " + readValue);
-//            System.out.println("READ len: " + read);
-//            
-//            assertEquals(length, read);
-//            assertEquals(HELLO_WORLD, readValue);
-//        } else {
-//            System.out.println("No file to read from");
-//        }
-//    }
+    @Test
+    public void testRead() {
+        testSeek();
+        if (0 < file) {
+            int length = HELLO_WORLD.length();
+            byte[] content = new byte[length];
+            long read = glfs_read(file, content, length, 0);
+
+            String readValue = new String(content);
+            System.out.println("READ val: " + readValue);
+            System.out.println("READ len: " + read);
+
+            assertEquals(length, read);
+            assertEquals(HELLO_WORLD, readValue);
+        } else {
+            System.out.println("No file to read from");
+        }
+    }
 
 //    @Test
 //    public void testFromGfid() {
@@ -145,7 +154,8 @@ public class GLFSTest extends TestCase {
     @Test
     public void testClose() {
 //        testFromGfid();
-        testWrite();
+//        testWrite();
+        testRead();
         if (0 < file) {
             int close = glfs_close(file);
             System.out.println("CLOSE: " + close);

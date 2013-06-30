@@ -111,6 +111,12 @@ public class GLFS {
             int flags
     );
 
+    @JniMethod(cast = "off_t")
+    static final native int glfs_lseek(
+            @JniArg(cast = "glfs_fd_t *") long fd,
+            @JniArg(cast = "off_t") long offset,
+            int whence
+    );
 
     @JniMethod
     static final native int glfs_unlink(
