@@ -72,6 +72,19 @@ To really test this you'll need a running glusterfs volume called *foo*.
 
         cat glfsjni/glfsjni-linux64/target/glfsjni.log
 
+# Testing notes
+
+## mvn test
+
+After doing a mvn install as described above the test suite can be re-run with the following command run in the top 
+libgfapi-jni directory
+
+    mvn -Dnative-src-url=file:glfsjni/target/glfsjni-1.0-SNAPSHOT-native-src.zip -Plinux64 test
+
+When using a test runner in your IDE you'll need to add the following Java system property
+
+    -Djava.library.path=glfsjni-linux64/target/native-build/target/lib
+
 # Project License
 
 As with GlusterFS generally and libgfapi in particular...

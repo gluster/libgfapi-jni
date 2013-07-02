@@ -47,12 +47,12 @@ public class GLFS {
     }
 
     @JniMethod(cast = "glfs_t *")
-    static final native long glfs_new(
+    public static final native long glfs_new(
             @JniArg(cast = "const char*") String volname
     );
 
     @JniMethod
-    static final native int glfs_set_volfile_server(
+    public static final native int glfs_set_volfile_server(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char*") String transport,
             @JniArg(cast = "const char*") String host,
@@ -60,51 +60,51 @@ public class GLFS {
     );
 
     @JniMethod
-    static final native int glfs_set_logging(
+    public static final native int glfs_set_logging(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char*") String logfile,
             int loglevel);
 
     @JniMethod
-    static final native int glfs_init(
+    public static final native int glfs_init(
             @JniArg(cast = "glfs_t *") long fs
     );
 
     @JniMethod
-    static final native int glfs_fini(
+    public static final native int glfs_fini(
             @JniArg(cast = "glfs_t *") long fs
     );
 
     @JniMethod(cast = "glfs_fd_t *")
-    static final native long glfs_open(
+    public static final native long glfs_open(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char*") String path,
             int flags);
 
     @JniMethod(cast = "glfs_fd_t *")
-    static final native long glfs_creat(
+    public static final native long glfs_creat(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char*") String path,
             int flags,
             int mode);
 
     @JniMethod
-    static final native int glfs_close(
+    public static final native int glfs_close(
             @JniArg(cast = "glfs_fd_t *") long fd);
 
     @JniMethod(cast = "glfs_t *")
-    static final native long glfs_from_glfd(
+    public static final native long glfs_from_glfd(
             @JniArg(cast = "glfs_fd_t *") long fd);
 
     @JniMethod
-    static final native int glfs_write(
+    public static final native int glfs_write(
             @JniArg(cast = "glfs_fd_t *") long fd,
             @JniArg(cast = "const char*", flags = NO_OUT) byte[] buf,
             int count,
             int flags);
 
     @JniMethod(cast = "ssize_t")
-    static final native long glfs_read(
+    public static final native long glfs_read(
             @JniArg(cast = "glfs_fd_t *") long fd,
             @JniArg(cast = "void *", flags = NO_IN) byte[] buf,
             @JniArg(cast = "size_t") long count,
@@ -112,14 +112,14 @@ public class GLFS {
     );
 
     @JniMethod(cast = "off_t")
-    static final native int glfs_lseek(
+    public static final native int glfs_lseek(
             @JniArg(cast = "glfs_fd_t *") long fd,
             @JniArg(cast = "off_t") long offset,
             int whence
     );
 
     @JniMethod
-    static final native int glfs_unlink(
+    public static final native int glfs_unlink(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path);
 

@@ -32,9 +32,10 @@
 package org.fusesource.glfsjni.internal;
 
 import org.testng.annotations.Test;
-import static org.testng.AssertJUnit.*;
 
 import static org.fusesource.glfsjni.internal.GLFS.*;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * A Unit test for the GLFS class implementation.
@@ -57,7 +58,7 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testNew")
     public void testSetlog() {
-        int setlog = glfs_set_logging(vol, "glfsjni.log", 7);
+        int setlog = glfs_set_logging(vol, "glfsjni/target/glfsjni.log", 7);
         System.out.println("SETLOG: " + setlog);
         assertEquals(0, setlog);
     }
@@ -85,56 +86,40 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testOpen_nonExisting")
     public void testCreate() {
-        if (0 == file) {
-            file = glfs_creat(vol, PATH, 0, 0666);
-            System.out.println("CREAT: " + file);
-            assertTrue(file > 0);
-        } else {
-            System.out.println("File exists, not creating.");
-        }
+        file = glfs_creat(vol, PATH, 0, 0666);
+        System.out.println("CREAT: " + file);
+        assertTrue(file > 0);
     }
 
     @Test(dependsOnMethods = "testCreate")
     public void testWrite() {
-        if (0 < file) {
-            int length = HELLO_WORLD.length();
-            int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
+        int length = HELLO_WORLD.length();
+        int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
 
-            System.out.println("WRITE: " + write);
+        System.out.println("WRITE: " + write);
 
-            assertEquals(length, write);
-        } else {
-            System.out.println("No file to write to");
-        }
+        assertEquals(length, write);
     }
 
     @Test(dependsOnMethods = "testWrite")
     public void testSeek() {
-        if (0 < file) {
-            int seek = glfs_lseek(file, 0, 0);
-            System.out.println("SEEK: " + seek);
-            assertEquals(0, seek);
-        } else {
-            System.out.println("No file to seek");
-        }
+        int seek = glfs_lseek(file, 0, 0);
+        System.out.println("SEEK: " + seek);
+        assertEquals(0, seek);
     }
-    
+
     @Test(dependsOnMethods = "testSeek")
     public void testRead() {
-        if (0 < file) {
-            int length = HELLO_WORLD.length();
-            byte[] content = new byte[length];
-            long read = glfs_read(file, content, length, 0);
+        int length = HELLO_WORLD.length();
+        byte[] content = new byte[length];
+        long read = glfs_read(file, content, length, 0);
 
-            String readValue = new String(content);
-            System.out.println("READ val: " + readValue);
-            System.out.println("READ len: " + read);
+        String readValue = new String(content);
+        System.out.println("READ val: " + readValue);
+        System.out.println("READ len: " + read);
 
-            assertEquals(length, read);
-            assertEquals(HELLO_WORLD, readValue);
-        } else {
-            System.out.println("No file to read from");
-        }
+        assertEquals(length, read);
+        assertEquals(HELLO_WORLD, readValue);
     }
 
     @Test(dependsOnMethods = "testRead")
@@ -146,13 +131,9 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testFromGlfd")
     public void testClose() {
-        if (0 < file) {
-            int close = glfs_close(file);
-            System.out.println("CLOSE: " + close);
-            assertEquals(0, close);
-        } else {
-            System.out.println("No file to close");
-        }
+        int close = glfs_close(file);
+        System.out.println("CLOSE: " + close);
+        assertEquals(0, close);
     }
 
     @Test(dependsOnMethods = "testClose")
