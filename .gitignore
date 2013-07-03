@@ -11,3 +11,5 @@ target
 .classpath
 .settings
 eclipse-classes
+glfsjni.log
+
