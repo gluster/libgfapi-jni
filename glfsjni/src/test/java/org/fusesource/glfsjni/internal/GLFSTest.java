@@ -31,6 +31,7 @@
  */
 package org.fusesource.glfsjni.internal;
 
+import org.fusesource.glfsjni.internal.structs.statvfs;
 import org.testng.annotations.Test;
 
 import static org.fusesource.glfsjni.internal.GLFS.*;
@@ -58,7 +59,7 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testNew")
     public void testSetlog() {
-        int setlog = glfs_set_logging(vol, "glfsjni/target/glfsjni.log", 7);
+        int setlog = glfs_set_logging(vol, "glfsjni.log", 7);
         System.out.println("SETLOG: " + setlog);
         assertEquals(0, setlog);
     }
@@ -130,6 +131,16 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testFromGlfd")
+    public void testStatvfs() {
+        statvfs buf = new statvfs();
+        int statvfs = glfs_statvfs(vol, "/", buf);
+        System.out.println("STATVFS: " + statvfs);
+        System.out.println(buf.toString());
+        assertEquals(0, statvfs);
+        assertEquals(4096, buf.f_bsize);
+    }
+
+    @Test(dependsOnMethods = "testStatvfs")
     public void testClose() {
         int close = glfs_close(file);
         System.out.println("CLOSE: " + close);

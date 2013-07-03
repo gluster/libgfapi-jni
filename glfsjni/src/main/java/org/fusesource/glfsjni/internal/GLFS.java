@@ -31,6 +31,7 @@
  */
 package org.fusesource.glfsjni.internal;
 
+import org.fusesource.glfsjni.internal.structs.statvfs;
 import org.fusesource.hawtjni.runtime.*;
 import static org.fusesource.hawtjni.runtime.ArgFlag.*;
 
@@ -122,5 +123,13 @@ public class GLFS {
     public static final native int glfs_unlink(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path);
+
+//    int glfs_statvfs (glfs_t *fs, const char *path, struct statvfs *buf);
+
+    @JniMethod
+    public static final native int glfs_statvfs (
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path,
+            statvfs buf);
 
 }
