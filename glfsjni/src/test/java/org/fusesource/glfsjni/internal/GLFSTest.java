@@ -86,13 +86,13 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testOpen_nonExisting")
-    public void testCreate() {
-        file = glfs_creat(vol, PATH, 0, 0666);
+    public void testCreateNew() {
+        file = glfs_creat(vol, PATH, GlusterOpenOption.READWRITE().createNew().getValue(), 0666);
         System.out.println("CREAT: " + file);
         assertTrue(file > 0);
     }
 
-    @Test(dependsOnMethods = "testCreate")
+    @Test(dependsOnMethods = "testCreateNew")
     public void testWrite() {
         int length = HELLO_WORLD.length();
         int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
