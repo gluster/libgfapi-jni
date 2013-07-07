@@ -4,6 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.fusesource.hawtjni.runtime.FieldFlag;
+import org.fusesource.hawtjni.runtime.JniField;
+import org.fusesource.hawtjni.runtime.JniMethod;
+import org.fusesource.hawtjni.runtime.MethodFlag;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,63 +15,84 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(of = "options", includeFieldNames = false)
 public class GlusterOpenOption {
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_APPEND;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_SYNC;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_DSYNC;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_TRUNC;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_RDONLY;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_WRONLY;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_RDWR;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_CREAT;
+    @JniField(flags = {FieldFlag.CONSTANT})
+    public static short O_EXCL;
     @Getter
     private int value;
     private List<String> options = new LinkedList<String>();
 
+    @JniMethod(flags = {MethodFlag.CONSTANT_INITIALIZER})
+    private static final native void init();
+
     public static GlusterOpenOption READ() {
         GlusterOpenOption o = new GlusterOpenOption();
-        o.value = 00000000;
+        o.value = O_RDONLY;
         o.options.add("read");
         return o;
     }
 
     public static GlusterOpenOption WRITE() {
         GlusterOpenOption o = new GlusterOpenOption();
-        o.value = 00000001;
+        o.value = O_WRONLY;
         o.options.add("write");
         return o;
     }
 
     public static GlusterOpenOption READWRITE() {
         GlusterOpenOption o = new GlusterOpenOption();
-        o.value = 00000002;
+        o.value = O_RDWR;
         o.options.add("readwrite");
         return o;
     }
 
     public GlusterOpenOption create() {
-        value |= 00000100;
+        value |= O_CREAT;
         options.add("create");
         return this;
     }
 
     public GlusterOpenOption createNew() {
-        value |= 00000200;
+        value |= O_CREAT | O_EXCL;
         options.add("create_new");
         return this;
     }
 
     public GlusterOpenOption truncateExisting() {
-        value |= 00001000;
+        value |= O_TRUNC;
         options.add("truncate_existing");
         return this;
     }
 
     public GlusterOpenOption append() {
-        value |= 00002000;
+        value |= O_APPEND;
         options.add("append");
         return this;
     }
 
     public GlusterOpenOption dsync() {
-        value |= 00010000;
+        value |= O_DSYNC;
         options.add("dsync");
         return this;
     }
 
     public GlusterOpenOption sync() {
-        value |= 04010000;
+        value |= O_SYNC;
         options.add("sync");
         return this;
     }
