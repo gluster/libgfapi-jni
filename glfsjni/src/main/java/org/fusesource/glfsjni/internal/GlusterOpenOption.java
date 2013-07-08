@@ -16,23 +16,23 @@ import java.util.List;
 @ToString(of = "options", includeFieldNames = false)
 public class GlusterOpenOption {
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_APPEND;
+    public static int O_APPEND;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_SYNC;
+    public static int O_SYNC;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_DSYNC;
+    public static int O_DSYNC;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_TRUNC;
+    public static int O_TRUNC;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_RDONLY;
+    public static int O_RDONLY;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_WRONLY;
+    public static int O_WRONLY;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_RDWR;
+    public static int O_RDWR;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_CREAT;
+    public static int O_CREAT;
     @JniField(flags = {FieldFlag.CONSTANT})
-    public static short O_EXCL;
+    public static int O_EXCL;
     @Getter
     private int value;
     private List<String> options = new LinkedList<String>();
