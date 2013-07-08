@@ -73,9 +73,9 @@ public class GlusterOpenOption {
         return this;
     }
 
-    public GlusterOpenOption truncateExisting() {
+    public GlusterOpenOption truncate() {
         value |= O_TRUNC;
-        options.add("truncate_existing");
+        options.add("truncate");
         return this;
     }
 
