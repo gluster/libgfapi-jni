@@ -46,7 +46,8 @@ import static org.testng.AssertJUnit.assertTrue;
 public class GLFSTest {
 
     public static final String PATH = "bar";
-    public static final String HELLO_WORLD = "hello world";
+    public static final String HELLO_ = "hello ";
+    public static final String WORLD = "world";
     private long vol;
     private long file;
 
@@ -59,7 +60,7 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testNew")
     public void testSetlog() {
-        int setlog = glfs_set_logging(vol, "glfsjni.log", 7);
+        int setlog = glfs_set_logging(vol, "/tmp/glfsjni.log", 20);
         System.out.println("SETLOG: " + setlog);
         assertEquals(0, setlog);
     }
@@ -86,23 +87,47 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testOpen_nonExisting")
-    public void testCreateNew() {
+    public void testCreate() {
         file = glfs_creat(vol, PATH, GlusterOpenOption.READWRITE().createNew().getValue(), 0666);
         System.out.println("CREAT: " + file);
         assertTrue(file > 0);
     }
 
-    @Test(dependsOnMethods = "testCreateNew")
-    public void testWrite() {
-        int length = HELLO_WORLD.length();
-        int write = glfs_write(file, HELLO_WORLD.getBytes(), length, 0);
+    @Test(dependsOnMethods = "testCreate")
+    public void testWriteNew() {
+        int length = HELLO_.length();
+        int write = glfs_write(file, HELLO_.getBytes(), length, 0);
 
         System.out.println("WRITE: " + write);
 
         assertEquals(length, write);
     }
 
-    @Test(dependsOnMethods = "testWrite")
+    @Test(dependsOnMethods = "testWriteNew")
+    public void testClose_new() {
+        int close = glfs_close(file);
+        System.out.println("CLOSE: " + close);
+        assertEquals(0, close);
+    }
+
+    @Test(dependsOnMethods = "testClose_new")
+    public void testOpen_existing() {
+        file = glfs_open(vol, PATH, GlusterOpenOption.READWRITE().append().getValue());
+        System.out.println("OPENEx: " + file);
+        assertTrue(0 < file);
+    }
+
+    @Test(dependsOnMethods = "testOpen_existing")
+    public void testWrite_existing() {
+        int length = WORLD.length();
+        int write = glfs_write(file, WORLD.getBytes(), length, 0);
+
+        System.out.println("WRITEEx: " + write);
+
+        assertEquals(length, write);
+    }
+
+    @Test(dependsOnMethods = "testWrite_existing")
     public void testSeek() {
         int seek = glfs_lseek(file, 0, 0);
         System.out.println("SEEK: " + seek);
@@ -111,7 +136,8 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testSeek")
     public void testRead() {
-        int length = HELLO_WORLD.length();
+        String helloWorld = HELLO_+WORLD;
+        int length = helloWorld.length();
         byte[] content = new byte[length];
         long read = glfs_read(file, content, length, 0);
 
@@ -120,7 +146,7 @@ public class GLFSTest {
         System.out.println("READ len: " + read);
 
         assertEquals(length, read);
-        assertEquals(HELLO_WORLD, readValue);
+        assertEquals(helloWorld, readValue);
     }
 
     @Test(dependsOnMethods = "testRead")
