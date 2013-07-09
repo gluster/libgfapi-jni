@@ -88,7 +88,9 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testOpen_nonExisting")
     public void testCreate() {
-        file = glfs_creat(vol, PATH, GlusterOpenOption.READWRITE().createNew().getValue(), 0666);
+        int flags = GlusterOpenOption.READWRITE().createNew().getValue();
+        System.out.println("OPENEx flags: " + Integer.toOctalString(flags));
+        file = glfs_creat(vol, PATH, flags, 0666);
         System.out.println("CREAT: " + file);
         assertTrue(file > 0);
     }
@@ -112,7 +114,9 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testClose_new")
     public void testOpen_existing() {
-        file = glfs_open(vol, PATH, GlusterOpenOption.READWRITE().append().getValue());
+        int flags = GlusterOpenOption.READWRITE().append().getValue();
+        System.out.println("OPENEx flags: " + Integer.toOctalString(flags));
+        file = glfs_open(vol, PATH, flags);
         System.out.println("OPENEx: " + file);
         assertTrue(0 < file);
     }

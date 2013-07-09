@@ -4,16 +4,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.fusesource.hawtjni.runtime.FieldFlag;
-import org.fusesource.hawtjni.runtime.JniField;
-import org.fusesource.hawtjni.runtime.JniMethod;
-import org.fusesource.hawtjni.runtime.MethodFlag;
+import org.fusesource.hawtjni.runtime.*;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(of = "options", includeFieldNames = false)
+@JniClass
 public class GlusterOpenOption {
     @JniField(flags = {FieldFlag.CONSTANT})
     public static int O_APPEND;
@@ -37,6 +35,11 @@ public class GlusterOpenOption {
     private int value;
     private List<String> options = new LinkedList<String>();
 
+    static {
+        GLFS.LIBRARY.load();
+        init();
+    }
+    
     @JniMethod(flags = {MethodFlag.CONSTANT_INITIALIZER})
     private static final native void init();
 
