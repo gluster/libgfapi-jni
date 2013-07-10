@@ -173,7 +173,7 @@ public class GLFSTest {
         assertEquals(lstat, fstat);
         assertEquals(4096, stat.st_blksize);
         assertEquals(11, stat.st_size);
-        assertEquals(0100666, stat.st_mode); // Why is 0100000 added to the mode?
+        assertEquals(0100666, stat.st_mode);
     }
     
     @Test(dependsOnMethods = "testStats")

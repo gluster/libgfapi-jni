@@ -15,7 +15,7 @@ public class stat {
     
     public long st_dev;
     public long st_ino;
-    public int st_mode; // 0100000 is added to the mode.  Why?
+    public int st_mode;
     public int st_nlink;
     public int st_uid;
     public int st_gid;
