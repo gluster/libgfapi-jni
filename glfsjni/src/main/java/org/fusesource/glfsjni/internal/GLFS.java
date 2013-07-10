@@ -31,9 +31,15 @@
  */
 package org.fusesource.glfsjni.internal;
 
+import org.fusesource.glfsjni.internal.structs.stat;
 import org.fusesource.glfsjni.internal.structs.statvfs;
-import org.fusesource.hawtjni.runtime.*;
-import static org.fusesource.hawtjni.runtime.ArgFlag.*;
+import org.fusesource.hawtjni.runtime.JniArg;
+import org.fusesource.hawtjni.runtime.JniClass;
+import org.fusesource.hawtjni.runtime.JniMethod;
+import org.fusesource.hawtjni.runtime.Library;
+
+import static org.fusesource.hawtjni.runtime.ArgFlag.NO_IN;
+import static org.fusesource.hawtjni.runtime.ArgFlag.NO_OUT;
 
 /**
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a> & <a href="http://about.me/louiszuckerman">Louis Zuckerman</a>
@@ -127,9 +133,29 @@ public class GLFS {
 //    int glfs_statvfs (glfs_t *fs, const char *path, struct statvfs *buf);
 
     @JniMethod
-    public static final native int glfs_statvfs (
+    public static final native int glfs_statvfs(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path,
             statvfs buf);
 
+//    int glfs_stat (glfs_t *fs, const char *path, struct stat *buf);
+//    int glfs_lstat (glfs_t *fs, const char *path, struct stat *buf);
+//    int glfs_fstat (glfs_fd_t *fd, struct stat *buf);
+
+    @JniMethod
+    public static final native int glfs_stat(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path,
+            stat buf);
+
+    @JniMethod
+    public static final native int glfs_lstat(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path,
+            stat buf);
+
+    @JniMethod
+    public static final native int glfs_fstat(
+            @JniArg(cast = "glfs_fd_t *") long fd,
+            stat buf);
 }

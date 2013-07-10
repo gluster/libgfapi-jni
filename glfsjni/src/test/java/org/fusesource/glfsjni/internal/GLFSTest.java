@@ -31,6 +31,7 @@
  */
 package org.fusesource.glfsjni.internal;
 
+import org.fusesource.glfsjni.internal.structs.stat;
 import org.fusesource.glfsjni.internal.structs.statvfs;
 import org.testng.annotations.Test;
 
@@ -154,6 +155,28 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testRead")
+    public void testStats() {
+        stat stat = new stat();
+        int statR = GLFS.glfs_stat(vol, PATH, stat);
+        stat lstat = new stat();
+        int lstatR = GLFS.glfs_lstat(vol, PATH, lstat);
+        stat fstat = new stat();
+        int fstatR = GLFS.glfs_fstat(file, fstat);
+
+        System.out.println("STATr: "+statR);
+        System.out.println("LSTATr: "+lstatR);
+        System.out.println("FSTATr: "+fstatR);
+        System.out.println("STAT: "+stat);
+        System.out.println("LSTAT: "+lstat);
+        System.out.println("FSTAT: "+fstat);
+        assertEquals(stat, lstat);
+        assertEquals(lstat, fstat);
+        assertEquals(4096, stat.st_blksize);
+        assertEquals(11, stat.st_size);
+        assertEquals(0100666, stat.st_mode); // Why is 0100000 added to the mode?
+    }
+    
+    @Test(dependsOnMethods = "testStats")
     public void testFromGlfd() {
         long glfs = glfs_from_glfd(file);
         System.out.println("GLFS_GLFD: " + glfs);
