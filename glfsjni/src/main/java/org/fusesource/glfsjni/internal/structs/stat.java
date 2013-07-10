@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.fusesource.hawtjni.runtime.ClassFlag;
 import org.fusesource.hawtjni.runtime.JniClass;
+import org.fusesource.hawtjni.runtime.JniField;
 
 /**
  * @author <a href="http://about.me/louiszuckerman">Louis Zuckerman</a>
@@ -24,12 +25,15 @@ public class stat {
     public int st_blksize;  //stat says 4096 as expected, lstat says 0, and fstat says 43, so this is excluded from equals() 
     public long st_blocks;
     
-    //HawtJNI complains that these don't exist
-//    public long st_atime;
+    //HawtJNI complains that the *nsec fields don't exist
+    @JniField(accessor="st_atime")
+    public long atime;
 //    public long st_atime_nsec;
-//    public long st_mtime;
+    @JniField(accessor="st_mtime")
+    public long mtime;
 //    public long st_mtime_nsec;
-//    public long st_ctime;
+    @JniField(accessor="st_ctime")
+    public long ctime;
 //    public long st_ctime_nsec;
 
 /*
