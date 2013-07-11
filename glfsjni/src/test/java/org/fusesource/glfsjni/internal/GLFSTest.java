@@ -194,6 +194,13 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testStatvfs")
+    public void testFsync() {
+        int fsync = glfs_fsync(file);
+        System.out.println("FSYNC: " + fsync);
+        assertEquals(0, fsync);
+    }
+
+    @Test(dependsOnMethods = "testFsync")
     public void testClose() {
         int close = glfs_close(file);
         System.out.println("CLOSE: " + close);

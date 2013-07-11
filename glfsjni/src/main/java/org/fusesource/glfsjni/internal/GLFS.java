@@ -99,6 +99,10 @@ public class GLFS {
     public static final native int glfs_close(
             @JniArg(cast = "glfs_fd_t *") long fd);
 
+    @JniMethod
+    public static final native int glfs_fsync(
+            @JniArg(cast = "glfs_fd_t *") long fd);
+
     @JniMethod(cast = "glfs_t *")
     public static final native long glfs_from_glfd(
             @JniArg(cast = "glfs_fd_t *") long fd);
