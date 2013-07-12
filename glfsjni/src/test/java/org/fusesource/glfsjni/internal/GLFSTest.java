@@ -211,9 +211,17 @@ public class GLFSTest {
     public void testUnlink() {
         int unl = glfs_unlink(vol, PATH);
         System.out.println("UNLINK: " + unl);
+        assertEquals(0, unl);
     }
 
     @Test(dependsOnMethods = "testUnlink")
+    public void testUnlink_NonExisting() {
+        int unl = glfs_unlink(vol, "/3q9g48hnaovcw802j039f");
+        System.out.println("UNLINK_N: " + unl);
+        assertEquals(-1, unl);
+    }
+
+    @Test(dependsOnMethods = "testUnlink_NonExisting")
     public void testFini() {
         int fini = glfs_fini(vol);
         System.out.println("FINI: " + fini);
