@@ -162,4 +162,12 @@ public class GLFS {
     public static final native int glfs_fstat(
             @JniArg(cast = "glfs_fd_t *") long fd,
             stat buf);
+
+    //    int glfs_access (glfs_t *fs, const char *path, int mode);
+    @JniMethod
+    public static final native int glfs_access(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path,
+            int mode
+    );
 }

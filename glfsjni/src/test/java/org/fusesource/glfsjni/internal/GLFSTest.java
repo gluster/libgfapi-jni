@@ -206,8 +206,24 @@ public class GLFSTest {
         System.out.println("CLOSE: " + close);
         assertEquals(0, close);
     }
-
+    
     @Test(dependsOnMethods = "testClose")
+    public void testAccess() {
+        int acc = glfs_access(vol, PATH, 0777);
+        System.out.println("ACCESS 777: " + acc);
+        assertEquals(-1, acc);
+        acc = glfs_access(vol, PATH, 0666);
+        System.out.println("ACCESS 666: " + acc);
+        assertEquals(0, acc);
+        acc = glfs_access(vol, PATH, 0444);
+        System.out.println("ACCESS 444: " + acc);
+        assertEquals(0, acc);
+        acc = glfs_access(vol, "/au4fh93hf293fa", 0444);
+        System.out.println("ACCESS NX: " + acc);
+        assertEquals(-1, acc);
+    }
+
+    @Test(dependsOnMethods = "testAccess")
     public void testUnlink() {
         int unl = glfs_unlink(vol, PATH);
         System.out.println("UNLINK: " + unl);
@@ -217,7 +233,7 @@ public class GLFSTest {
     @Test(dependsOnMethods = "testUnlink")
     public void testUnlink_NonExisting() {
         int unl = glfs_unlink(vol, "/3q9g48hnaovcw802j039f");
-        System.out.println("UNLINK_N: " + unl);
+        System.out.println("UNLINK NX: " + unl);
         assertEquals(-1, unl);
     }
 
