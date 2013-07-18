@@ -31,6 +31,7 @@
  */
 package org.fusesource.glfsjni.internal;
 
+import org.fusesource.glfsjni.internal.structs.dirent;
 import org.fusesource.glfsjni.internal.structs.stat;
 import org.fusesource.glfsjni.internal.structs.statvfs;
 import org.testng.annotations.Test;
@@ -51,6 +52,8 @@ public class GLFSTest {
     public static final String WORLD = "world";
     private long vol;
     private long file;
+    private long dir;
+    private long dirpos;
 
     @Test
     public void testNew() {
@@ -141,7 +144,7 @@ public class GLFSTest {
 
     @Test(dependsOnMethods = "testSeek")
     public void testRead() {
-        String helloWorld = HELLO_+WORLD;
+        String helloWorld = HELLO_ + WORLD;
         int length = helloWorld.length();
         byte[] content = new byte[length];
         long read = glfs_read(file, content, length, 0);
@@ -163,19 +166,19 @@ public class GLFSTest {
         stat fstat = new stat();
         int fstatR = GLFS.glfs_fstat(file, fstat);
 
-        System.out.println("STATr: "+statR);
-        System.out.println("LSTATr: "+lstatR);
-        System.out.println("FSTATr: "+fstatR);
-        System.out.println("STAT: "+stat);
-        System.out.println("LSTAT: "+lstat);
-        System.out.println("FSTAT: "+fstat);
+        System.out.println("STATr: " + statR);
+        System.out.println("LSTATr: " + lstatR);
+        System.out.println("FSTATr: " + fstatR);
+        System.out.println("STAT: " + stat);
+        System.out.println("LSTAT: " + lstat);
+        System.out.println("FSTAT: " + fstat);
         assertEquals(stat, lstat);
         assertEquals(lstat, fstat);
         assertEquals(4096, stat.st_blksize);
         assertEquals(11, stat.st_size);
         assertEquals(0100666, stat.st_mode);
     }
-    
+
     @Test(dependsOnMethods = "testStats")
     public void testFromGlfd() {
         long glfs = glfs_from_glfd(file);
@@ -206,7 +209,7 @@ public class GLFSTest {
         System.out.println("CLOSE: " + close);
         assertEquals(0, close);
     }
-    
+
     @Test(dependsOnMethods = "testClose")
     public void testAccess() {
         int acc = glfs_access(vol, PATH, 0777);
@@ -224,6 +227,50 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testAccess")
+    public void testOpendir() {
+        dir = glfs_opendir(vol, "/");
+        System.out.println("OPENDIR: " + dir);
+        assertTrue(dir > 0);
+    }
+
+    @Test(dependsOnMethods = "testOpendir")
+    public void testReaddir() {
+        System.out.println("SIZEOF: " + dirent.SIZE_OF);
+
+        long next = dirent.malloc(dirent.SIZE_OF);
+        System.out.println("NEXT: " + next);
+
+        dirent dirstruct = new dirent();
+        int read = glfs_readdir_r(dir, dirstruct, next); //crash
+        System.out.println("READDIR: " + read);
+        System.out.println("DIRSTRUCT: "+dirstruct);
+
+        dirent result = new dirent();
+        dirent.memmove(result, next, dirent.SIZE_OF);
+        System.out.println("RESULT: " + result);
+        assertEquals(0, read);
+    }
+
+    @Test(dependsOnMethods = "testReaddir")
+    public void testTelldir() {
+        dirpos = glfs_telldir(dir);
+        System.out.println("TELLDIR: " + dirpos);
+        assertTrue(dirpos > 0);
+    }
+
+    @Test(dependsOnMethods = "testTelldir")
+    public void testSeekdir() {
+        glfs_seekdir(dir, 1l);
+    }
+
+    @Test(dependsOnMethods = "testSeekdir")
+    public void testClosedir() {
+        long close = glfs_closedir(dir);
+        System.out.println("CLOSEDIR: " + close);
+        assertEquals(0, close);
+    }
+
+    @Test(dependsOnMethods = "testClosedir")
     public void testUnlink() {
         int unl = glfs_unlink(vol, PATH);
         System.out.println("UNLINK: " + unl);

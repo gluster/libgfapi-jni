@@ -31,6 +31,7 @@
  */
 package org.fusesource.glfsjni.internal;
 
+import org.fusesource.glfsjni.internal.structs.dirent;
 import org.fusesource.glfsjni.internal.structs.stat;
 import org.fusesource.glfsjni.internal.structs.statvfs;
 import org.fusesource.hawtjni.runtime.JniArg;
@@ -142,22 +143,22 @@ public class GLFS {
             @JniArg(cast = "const char *") String path,
             statvfs buf);
 
-//    int glfs_stat (glfs_t *fs, const char *path, struct stat *buf);
-//    int glfs_lstat (glfs_t *fs, const char *path, struct stat *buf);
-//    int glfs_fstat (glfs_fd_t *fd, struct stat *buf);
 
+    //    int glfs_stat (glfs_t *fs, const char *path, struct stat *buf);
     @JniMethod
     public static final native int glfs_stat(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path,
             stat buf);
 
+    //    int glfs_lstat (glfs_t *fs, const char *path, struct stat *buf);
     @JniMethod
     public static final native int glfs_lstat(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path,
             stat buf);
 
+    //    int glfs_fstat (glfs_fd_t *fd, struct stat *buf);
     @JniMethod
     public static final native int glfs_fstat(
             @JniArg(cast = "glfs_fd_t *") long fd,
@@ -170,4 +171,37 @@ public class GLFS {
             @JniArg(cast = "const char *") String path,
             int mode
     );
+
+    //    glfs_fd_t *glfs_opendir (glfs_t *fs, const char *path);
+    @JniMethod(cast = "glfs_fd_t *")
+    public static final native long glfs_opendir(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path
+    );
+
+    //    int glfs_readdir_r (glfs_fd_t *fd, struct dirent *dirent, struct dirent **result);
+    @JniMethod
+    public static final native int glfs_readdir_r(
+            @JniArg(cast = "glfs_fd_t *") long fd,
+            dirent dirent,
+            @JniArg(cast = "struct dirent **") long result
+    );
+
+    //    long glfs_telldir (glfs_fd_t *fd);
+    public static final native long glfs_telldir(
+            @JniArg(cast = "glfs_fd_t *") long fd
+    );
+
+    //    void glfs_seekdir (glfs_fd_t *fd, long offset);
+    public static final native void glfs_seekdir(
+            @JniArg(cast = "glfs_fd_t *") long fd,
+            long offset
+    );
+
+    //    int glfs_closedir (glfs_fd_t *fd);
+    public static final native int glfs_closedir(
+            @JniArg(cast = "glfs_fd_t *") long fd
+    );
+
+
 }
