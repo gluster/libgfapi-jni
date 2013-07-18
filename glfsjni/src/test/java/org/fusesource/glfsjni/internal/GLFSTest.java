@@ -248,6 +248,7 @@ public class GLFSTest {
         dirent result = new dirent();
         dirent.memmove(result, next, dirent.SIZE_OF);
         System.out.println("RESULT: " + result);
+        dirent.free(next);
         assertEquals(0, read);
     }
 

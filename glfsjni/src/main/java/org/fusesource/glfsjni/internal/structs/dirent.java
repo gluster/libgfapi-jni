@@ -80,6 +80,12 @@ public class dirent {
     public static final native long malloc(
             @JniArg(cast = "size_t") long size);
 
+    //void free(void *ptr);
+    @JniMethod
+    public static final native void free(
+            @JniArg(cast = "void *") long ptr
+    );
+
     @JniMethod
     public static final native void memmove(
             @JniArg(cast = "void *", flags = {ArgFlag.NO_IN, ArgFlag.CRITICAL}) dirent dest,
