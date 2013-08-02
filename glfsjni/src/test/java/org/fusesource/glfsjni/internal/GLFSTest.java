@@ -93,6 +93,7 @@ public class GLFSTest {
         System.out.println("STRERROR: " + strerror);
         assertEquals(0, file);
         assertEquals("No such file or directory", strerror);
+        assertEquals(2, errno);
     }
 
     @Test(dependsOnMethods = "testOpen_nonExisting")
@@ -225,6 +226,7 @@ public class GLFSTest {
         System.out.println("STRERROR: " + strerror);
         assertEquals(-1, acc);
         assertEquals("Permission denied", strerror);
+        assertEquals(13, errno);
         acc = glfs_access(vol, PATH, 0666);
         System.out.println("ACCESS 666: " + acc);
         assertEquals(0, acc);
@@ -238,7 +240,9 @@ public class GLFSTest {
         strerror = UtilJNI.strerror();
         System.out.println("STRERROR: " + strerror);
         assertEquals(-1, acc);
+        assertEquals(2, errno);
         assertEquals("No such file or directory", strerror);
+        assertEquals(2, errno);
     }
 
     @Test(dependsOnMethods = "testAccess")
@@ -312,6 +316,7 @@ public class GLFSTest {
         System.out.println("STRERROR: " + strerror);
         assertEquals(-1, unl);
         assertEquals("No such file or directory", strerror);
+        assertEquals(2, errno);
     }
 
     @Test(dependsOnMethods = "testUnlink_NonExisting")
