@@ -92,6 +92,7 @@ public class GLFSTest {
         String strerror = UtilJNI.strerror();
         System.out.println("STRERROR: " + strerror);
         assertEquals(0, file);
+        assertEquals("No such file or directory", strerror);
     }
 
     @Test(dependsOnMethods = "testOpen_nonExisting")
@@ -218,7 +219,12 @@ public class GLFSTest {
     public void testAccess() {
         int acc = glfs_access(vol, PATH, 0777);
         System.out.println("ACCESS 777: " + acc);
+        int errno = UtilJNI.errno();
+        System.out.println("ERRNO: " + errno);
+        String strerror = UtilJNI.strerror();
+        System.out.println("STRERROR: " + strerror);
         assertEquals(-1, acc);
+        assertEquals("Permission denied", strerror);
         acc = glfs_access(vol, PATH, 0666);
         System.out.println("ACCESS 666: " + acc);
         assertEquals(0, acc);
@@ -227,7 +233,12 @@ public class GLFSTest {
         assertEquals(0, acc);
         acc = glfs_access(vol, "/au4fh93hf293fa", 0444);
         System.out.println("ACCESS NX: " + acc);
+        errno = UtilJNI.errno();
+        System.out.println("ERRNO: " + errno);
+        strerror = UtilJNI.strerror();
+        System.out.println("STRERROR: " + strerror);
         assertEquals(-1, acc);
+        assertEquals("No such file or directory", strerror);
     }
 
     @Test(dependsOnMethods = "testAccess")
@@ -295,7 +306,12 @@ public class GLFSTest {
     public void testUnlink_NonExisting() {
         int unl = glfs_unlink(vol, "/3q9g48hnaovcw802j039f");
         System.out.println("UNLINK NX: " + unl);
+        int errno = UtilJNI.errno();
+        System.out.println("ERRNO: " + errno);
+        String strerror = UtilJNI.strerror();
+        System.out.println("STRERROR: " + strerror);
         assertEquals(-1, unl);
+        assertEquals("No such file or directory", strerror);
     }
 
     @Test(dependsOnMethods = "testUnlink_NonExisting")
