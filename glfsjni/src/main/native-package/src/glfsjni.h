@@ -33,6 +33,8 @@
 #define GLFSJNI_H
 
 #include "hawtjni.h"
+#include <string.h>
+#include <sys/errno.h>
 #include <glusterfs/api/glfs.h>
 
 #endif /* GLFSJNI_H */

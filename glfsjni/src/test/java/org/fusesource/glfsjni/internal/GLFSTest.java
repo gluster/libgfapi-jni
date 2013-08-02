@@ -87,6 +87,10 @@ public class GLFSTest {
     public void testOpen_nonExisting() {
         file = glfs_open(vol, PATH, 0);
         System.out.println("OPEN: " + file);
+        int errno = UtilJNI.errno();
+        System.out.println("ERRNO: " + errno);
+        String strerror = UtilJNI.strerror();
+        System.out.println("STRERROR: " + strerror);
         assertEquals(0, file);
     }
 
@@ -237,19 +241,28 @@ public class GLFSTest {
     public void testReaddir() {
         System.out.println("SIZEOF: " + dirent.SIZE_OF);
 
-        long next = dirent.malloc(dirent.SIZE_OF);
-        System.out.println("NEXT: " + next);
 
-        dirent dirstruct = new dirent();
-        int read = glfs_readdir_r(dir, dirstruct, next); //crash
-        System.out.println("READDIR: " + read);
-        System.out.println("DIRSTRUCT: "+dirstruct);
+        dirent dirstruct, result;
+        for (int i = 0; i < 10; i++) {
+            dirstruct = new dirent();
+            long next = dirent.malloc(dirent.SIZE_OF);
+            System.out.println("NEXT: " + next);
+            int read = glfs_readdir_r(dir, dirstruct, next); //crash
+            assertEquals(0, read);
+            if (dirstruct.d_ino == 0) {
+                System.out.println("End of list");
+                break;
+            }
+            System.out.println("READDIR: " + read);
+            System.out.println("DIRSTRUCT: " + dirstruct);
 
-        dirent result = new dirent();
-        dirent.memmove(result, next, dirent.SIZE_OF);
-        System.out.println("RESULT: " + result);
-        dirent.free(next);
-        assertEquals(0, read);
+            result = new dirent();
+            dirent.memmove(result, next, dirent.SIZE_OF);
+            System.out.println("RESULT: " + result);
+            dirent.free(next);
+
+        }
+
     }
 
     @Test(dependsOnMethods = "testReaddir")
