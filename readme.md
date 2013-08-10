@@ -87,8 +87,7 @@ When using a test runner in your IDE you'll need to add the following Java syste
 
 # Project License
 
-As with GlusterFS generally and libgfapi in particular...
+Until further notice (made here and in LICENSE.txt) this project is licensed under the terms of the
+3-clause BSD license, as written in LICENSE.txt (and copied in several source files).
 
-This project is licensed to you under your choice of the GNU Lesser General Public 
-License, version 3 or any later version (LGPLv3 or later), or the GNU General Public 
-License, version 2 (GPLv2), in all cases as published by the Free Software Foundation.
+The licensing is likely to change in the near future as the project matures.

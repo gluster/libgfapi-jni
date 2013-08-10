@@ -1,8 +1,6 @@
 dnl ---------------------------------------------------------------------------
-dnl  Copyright (C) 2011, FuseSource Corp.  All rights reserved.
-dnl
-dnl      http://fusesource.com
-dnl
+dnl  Copyright (c) 2013 Louis Zuckerman All rights reserved.
+dnl  
 dnl  Redistribution and use in source and binary forms, with or without
 dnl  modification, are permitted provided that the following conditions are
 dnl  met:
@@ -13,7 +11,7 @@ dnl     * Redistributions in binary form must reproduce the above
 dnl  copyright notice, this list of conditions and the following disclaimer
 dnl  in the documentation and/or other materials provided with the
 dnl  distribution.
-dnl     * Neither the name of FuseSource Corp. nor the names of its
+dnl     * Neither the names of the authors nor the names of 
 dnl  contributors may be used to endorse or promote products derived from
 dnl  this software without specific prior written permission.
 dnl  
@@ -28,6 +26,12 @@ dnl  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 dnl  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 dnl  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 dnl  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+dnl  
+dnl  =======
+dnl  
+dnl  This file, was derived from the leveldbjni project with significant help from 
+dnl  Hiram Chirino (thanks, Hiram!).  The leveldbjni project is hosted on github:
+dnl  https://github.com/fusesource/leveldbjni
 dnl ---------------------------------------------------------------------------
 
 AC_DEFUN([CUSTOM_M4_SETUP],
