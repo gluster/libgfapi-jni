@@ -37,13 +37,13 @@
     <version>1.9</version>
   </parent>
 
-  <groupId>org.fusesource.glfsjni</groupId>
-  <artifactId>glfsjni-project</artifactId>
+  <groupId>com.peircean.libgfapi-jni</groupId>
+  <artifactId>libgfapi-project</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   
   <name>${project.artifactId}</name>
-  <description>glfsjni is a jni library for accessing glfs.</description>
+  <description>libgfapi-jni is a jni library for accessing glusterfs via the libgfapi C library.</description>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,7 +51,7 @@
   </properties>
   
   <modules>
-    <module>glfsjni</module>
+    <module>libgfapi</module>
   </modules>
   
   <inceptionYear>2013</inceptionYear>
@@ -213,28 +213,28 @@
     <profile>
       <id>full</id>
       <modules>
-        <module>glfsjni-linux32</module>
-        <module>glfsjni-linux64</module>
-        <module>glfsjni-all</module>
+        <module>libgfapi-linux32</module>
+        <module>libgfapi-linux64</module>
+        <module>libgfapi-all</module>
       </modules>
     </profile>    
 
     <profile>
       <id>all</id>
       <modules>
-        <module>glfsjni-all</module>
+        <module>libgfapi-all</module>
       </modules>
     </profile>    
     <profile>
       <id>linux32</id>
       <modules>
-        <module>glfsjni-linux32</module>
+        <module>libgfapi-linux32</module>
       </modules>
     </profile>
     <profile>
       <id>linux64</id>
       <modules>
-        <module>glfsjni-linux64</module>
+        <module>libgfapi-linux64</module>
       </modules>
     </profile>
 

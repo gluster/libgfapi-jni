@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2011, FuseSource Corp.  All rights reserved.
+
+      http://fusesource.com
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+
+     * Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+     * Redistributions in binary form must reproduce the above
+  copyright notice, this list of conditions and the following disclaimer
+  in the documentation and/or other materials provided with the
+  distribution.
+     * Neither the name of FuseSource Corp. nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.peircean.libgfapi-jni</groupId>
+    <artifactId>libgfapi-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>com.peircean.libgfapi-jni</groupId>
+  <artifactId>libgfapi-all</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>bundle</packaging>
+  
+  <name>${project.artifactId}</name>
+  <description>An uber jar which contains all the glfsjni platform libraries and dependencies</description>
+      
+  <dependencies>
+    <dependency>
+      <groupId>com.peircean.libgfapi-jni</groupId>
+      <artifactId>libgfapi</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.peircean.libgfapi-jni</groupId>
+      <artifactId>libgfapi-linux32</artifactId>
+      <version>1.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.peircean.libgfapi-jni</groupId>
+      <artifactId>libgfapi-linux64</artifactId>
+      <version>1.5</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+     
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.3.7</version>
+        <extensions>true</extensions>
+        <inherited>true</inherited>
+        <configuration>
+          <instructions>
+            <Bundle-Name>${project.artifactId}</Bundle-Name>
+            <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+            <Export-Package>
+                com.peircean.libgfapi-jni;version=${project.version},
+              org.iq80.glfs*;version=${glfs-api-version},</Export-Package>
+            <Import-Package></Import-Package>
+            <DynamicImport-Package></DynamicImport-Package>
+            <Private-Package>org.fusesource.hawtjni*,com.peircean.libgfapi-jni.internal*,!*</Private-Package>
+            <Implementation-Title>LevelDB JNI</Implementation-Title>
+            <Implementation-Version>${project.version}</Implementation-Version>
+            <Embed-Dependency>
+              *;groupId=com.peircean.libgfapi-jni;inline=META-INF/native/*,
+            </Embed-Dependency>
+            <Embed-Transitive>true</Embed-Transitive>
+            <Bundle-NativeCode>
+              META-INF/native/linux32/libgfapi-jni.so;osname=Linux;processor=x86,
+              META-INF/native/linux64/libgfapi-jni.so;osname=Linux;processor=x86-64
+            </Bundle-NativeCode>
+         </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <profiles>
+    <profile>
+      <id>release</id>
+      
+      <dependencies>
+        <dependency>
+          <groupId>com.peircean.libgfapi-jni</groupId>
+          <artifactId>libgfapi</artifactId>
+          <version>1.0-SNAPSHOT</version>
+          <classifier>sources</classifier>
+          <optional>true</optional>
+        </dependency>
+        <dependency>
+          <groupId>org.iq80.glfs</groupId>
+          <artifactId>glfs-api</artifactId>
+          <version>${glfs-api-version}</version>
+          <classifier>sources</classifier>
+          <optional>true</optional>
+        </dependency>
+        <dependency>
+          <groupId>org.fusesource.hawtjni</groupId>
+          <artifactId>hawtjni-runtime</artifactId>
+          <version>${hawtjni-version}</version>
+          <classifier>sources</classifier>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+          
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <configuration>
+              <skipSource>true</skipSource>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>uber-sources-jar</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <descriptors>
+                    <descriptor>${basedir}/src/main/descriptors/uber-sources.xml</descriptor>
+                  </descriptors>
+                  <appendAssemblyId>true</appendAssemblyId>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+</project>
