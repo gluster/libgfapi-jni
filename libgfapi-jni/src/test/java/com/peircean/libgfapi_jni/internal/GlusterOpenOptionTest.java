@@ -1,4 +1,4 @@
-package org.fusesource.glfsjni.internal;
+package com.peircean.libgfapi_jni.internal;
 
 import org.testng.annotations.Test;
 

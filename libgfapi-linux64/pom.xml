@@ -49,13 +49,13 @@
   <dependencies>
     <dependency>
       <groupId>com.peircean.libgfapi-jni</groupId>
-      <artifactId>libgfapi</artifactId>
+      <artifactId>libgfapi-jni</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
   <build>
-    <testSourceDirectory>${basedir}/../glfsjni/src/test/java</testSourceDirectory>
+    <testSourceDirectory>${basedir}/../libgfapi-jni/src/test/java</testSourceDirectory>
      
     <plugins>
       <plugin>
@@ -78,11 +78,11 @@
           </execution>
         </executions>
         <configuration>
-          <name>libgfapi</name>
+          <name>libgfapi-jni</name>
           <classified>false</classified>
           <nativeSrcDependency>
             <groupId>com.peircean.libgfapi-jni</groupId>
-            <artifactId>libgfapi</artifactId>
+            <artifactId>libgfapi-jni</artifactId>
             <version>${project.version}</version>
             <classifier>native-src</classifier>
             <type>zip</type>

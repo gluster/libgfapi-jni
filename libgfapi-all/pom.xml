@@ -50,7 +50,7 @@
   <dependencies>
     <dependency>
       <groupId>com.peircean.libgfapi-jni</groupId>
-      <artifactId>libgfapi</artifactId>
+      <artifactId>libgfapi-jni</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
@@ -111,7 +111,7 @@
       <dependencies>
         <dependency>
           <groupId>com.peircean.libgfapi-jni</groupId>
-          <artifactId>libgfapi</artifactId>
+          <artifactId>libgfapi-jni</artifactId>
           <version>1.0-SNAPSHOT</version>
           <classifier>sources</classifier>
           <optional>true</optional>

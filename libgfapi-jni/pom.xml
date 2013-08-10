@@ -40,7 +40,7 @@
   </parent>
 
   <groupId>com.peircean.libgfapi-jni</groupId>
-  <artifactId>libgfapi</artifactId>
+  <artifactId>libgfapi-jni</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   
@@ -97,7 +97,7 @@
         </executions>        
         <configuration>
           <skipAutogen>${skipAutogen}</skipAutogen>
-          <name>libgfapi</name>
+          <name>libgfapi-jni</name>
           <callbacks>false</callbacks>
           <copyright><![CDATA[
 /*******************************************************************************

@@ -51,7 +51,7 @@
   </properties>
   
   <modules>
-    <module>libgfapi</module>
+    <module>libgfapi-jni</module>
   </modules>
   
   <inceptionYear>2013</inceptionYear>

@@ -29,14 +29,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.fusesource.glfsjni.internal;
+package com.peircean.libgfapi_jni.internal;
 
-import org.fusesource.glfsjni.internal.structs.dirent;
-import org.fusesource.glfsjni.internal.structs.stat;
-import org.fusesource.glfsjni.internal.structs.statvfs;
+import com.peircean.libgfapi_jni.internal.structs.dirent;
+import com.peircean.libgfapi_jni.internal.structs.stat;
+import com.peircean.libgfapi_jni.internal.structs.statvfs;
 import org.testng.annotations.Test;
 
-import static org.fusesource.glfsjni.internal.GLFS.*;
+import static com.peircean.libgfapi_jni.internal.GLFS.*;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
