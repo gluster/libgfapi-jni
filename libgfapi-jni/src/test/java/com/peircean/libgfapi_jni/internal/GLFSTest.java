@@ -34,6 +34,9 @@ import com.peircean.libgfapi_jni.internal.structs.stat;
 import com.peircean.libgfapi_jni.internal.structs.statvfs;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import static com.peircean.libgfapi_jni.internal.GLFS.*;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
@@ -54,8 +57,11 @@ public class GLFSTest {
     private long dirpos;
 
     @Test
-    public void testNew() {
-        vol = glfs_new("foo");
+    public void testNew() throws IOException {
+        Properties properties = new Properties();
+        properties.load(getClass().getClassLoader().getResourceAsStream("testing.properties"));
+        String volname = properties.getProperty("glusterfs.volume");
+        vol = glfs_new(volname);
         System.out.println("NEW: " + vol);
         assertTrue(0 < vol);
     }
@@ -68,8 +74,12 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testSetlog")
-    public void testServer() {
-        int server = glfs_set_volfile_server(vol, "tcp", "127.0.2.1", 24007);
+    public void testServer() throws IOException {
+        Properties properties = new Properties();
+        properties.load(getClass().getClassLoader().getResourceAsStream("testing.properties"));
+        String address = properties.getProperty("glusterfs.server");
+
+        int server = glfs_set_volfile_server(vol, "tcp", address, 24007);
         System.out.println("SERVER: " + server);
         assertEquals(0, server);
     }

@@ -61,6 +61,15 @@
 
   <build>
     <testSourceDirectory>${basedir}/../libgfapi-jni/src/test/java</testSourceDirectory>
+      <testResources>
+          <testResource>
+              <directory>${basedir}/../libgfapi-jni/src/test/resources</directory>
+              <filtering>true</filtering>
+              <includes>
+                  <include>**/*</include>
+              </includes>
+          </testResource>
+      </testResources>
      
     <plugins>
       <plugin>
