@@ -55,29 +55,35 @@ public class GLFSTest {
     private long file;
     private long dir;
     private long dirpos;
+    private Properties properties = null;
+
+    private Properties getProperties() throws IOException {
+        if (null == properties) {
+            properties = new Properties();
+            properties.load(getClass().getClassLoader().getResourceAsStream("testing.properties"));
+        }
+        return properties;
+    }
 
     @Test
     public void testNew() throws IOException {
-        Properties properties = new Properties();
-        properties.load(getClass().getClassLoader().getResourceAsStream("testing.properties"));
-        String volname = properties.getProperty("glusterfs.volume");
+        String volname = getProperties().getProperty("glusterfs.volume");
         vol = glfs_new(volname);
         System.out.println("NEW: " + vol);
         assertTrue(0 < vol);
     }
 
     @Test(dependsOnMethods = "testNew")
-    public void testSetlog() {
-        int setlog = glfs_set_logging(vol, "/tmp/glfsjni.log", 20);
+    public void testSetlog() throws IOException {
+        String logfile = getProperties().getProperty("client.logfile");
+        int setlog = glfs_set_logging(vol, logfile, 20);
         System.out.println("SETLOG: " + setlog);
         assertEquals(0, setlog);
     }
 
     @Test(dependsOnMethods = "testSetlog")
     public void testServer() throws IOException {
-        Properties properties = new Properties();
-        properties.load(getClass().getClassLoader().getResourceAsStream("testing.properties"));
-        String address = properties.getProperty("glusterfs.server");
+        String address = getProperties().getProperty("glusterfs.server");
 
         int server = glfs_set_volfile_server(vol, "tcp", address, 24007);
         System.out.println("SERVER: " + server);
