@@ -139,7 +139,7 @@ public class GLFS {
     public static final native int glfs_statvfs(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path,
-            statvfs buf);
+            @JniArg(flags = NO_IN) statvfs buf);
 
 
     //    int glfs_stat (glfs_t *fs, const char *path, struct stat *buf);
@@ -147,20 +147,20 @@ public class GLFS {
     public static final native int glfs_stat(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path,
-            stat buf);
+            @JniArg(flags = NO_IN) stat buf);
 
     //    int glfs_lstat (glfs_t *fs, const char *path, struct stat *buf);
     @JniMethod
     public static final native int glfs_lstat(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String path,
-            stat buf);
+            @JniArg(flags = NO_IN) stat buf);
 
     //    int glfs_fstat (glfs_fd_t *fd, struct stat *buf);
     @JniMethod
     public static final native int glfs_fstat(
             @JniArg(cast = "glfs_fd_t *") long fd,
-            stat buf);
+            @JniArg(flags = NO_IN) stat buf);
 
     //    int glfs_access (glfs_t *fs, const char *path, int mode);
     @JniMethod
@@ -181,7 +181,7 @@ public class GLFS {
     @JniMethod
     public static final native int glfs_readdir_r(
             @JniArg(cast = "glfs_fd_t *") long fd,
-            dirent dirent,
+            @JniArg(flags = NO_IN) dirent dirent,
             @JniArg(cast = "struct dirent **") long result
     );
 
