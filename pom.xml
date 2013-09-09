@@ -54,7 +54,7 @@
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hawtjni-version>1.8</hawtjni-version>
+    <hawtjni-version>1.9</hawtjni-version>
     <glusterfs.server>127.0.2.1</glusterfs.server>
     <glusterfs.volume>foo</glusterfs.volume>
     <client.logfile>/tmp/glfsjni.log</client.logfile>
