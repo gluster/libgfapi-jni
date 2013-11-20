@@ -41,6 +41,10 @@ public class dirent {
     //    char d_name[256];
     public byte[] d_name = new byte[256];
 
+    public String getName() {
+        return getStringFromByteArray(d_name);
+    }
+    
     public static String typeOf(int type) {
         String text = "";
         if (DT_UNKNOWN == type) {
@@ -101,10 +105,21 @@ public class dirent {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("TYPE: ").append(typeOf(d_type)).append("; ")
-                .append("NAME: ").append(new String(d_name)).append("; ")
+                .append("NAME: ").append(getName()).append("; ")
                 .append("RECLEN: ").append(d_reclen).append("; ")
                 .append("INO: ").append(d_ino).append("; ")
                 .append("OFF:").append(d_off);
+        return sb.toString();
+    }
+
+    private String getStringFromByteArray(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            if (bytes[i] == 0x00) {
+                break;
+            }
+            sb.append((char)bytes[i]);
+        }
         return sb.toString();
     }
 

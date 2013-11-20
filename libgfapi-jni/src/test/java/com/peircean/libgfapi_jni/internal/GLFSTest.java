@@ -269,16 +269,14 @@ public class GLFSTest {
     @Test(dependsOnMethods = "testOpendir")
     public void testReaddir() {
         System.out.println("SIZEOF: " + dirent.SIZE_OF);
-
-
         dirent dirstruct, result;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             dirstruct = new dirent();
             long next = dirent.malloc(dirent.SIZE_OF);
             System.out.println("NEXT: " + next);
             int read = glfs_readdir_r(dir, dirstruct, next); //crash
             assertEquals(0, read);
-            if (dirstruct.d_ino == 0) {
+            if (dirstruct.d_off == 0) {
                 System.out.println("End of list");
                 break;
             }
@@ -287,11 +285,8 @@ public class GLFSTest {
 
             result = new dirent();
             dirent.memmove(result, next, dirent.SIZE_OF);
-            System.out.println("RESULT: " + result);
             dirent.free(next);
-
         }
-
     }
 
     @Test(dependsOnMethods = "testReaddir")
