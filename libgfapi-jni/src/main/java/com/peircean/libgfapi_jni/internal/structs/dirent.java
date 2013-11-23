@@ -1,8 +1,8 @@
 package com.peircean.libgfapi_jni.internal.structs;
 
 
-import lombok.EqualsAndHashCode;
 import com.peircean.libgfapi_jni.internal.GLFS;
+import lombok.EqualsAndHashCode;
 import org.fusesource.hawtjni.runtime.*;
 
 @EqualsAndHashCode
@@ -42,7 +42,7 @@ public class dirent {
     public byte[] d_name = new byte[256];
 
     public String getName() {
-        return getStringFromByteArray(d_name);
+        return new String(d_name).split("\0")[0];
     }
     
     public static String typeOf(int type) {
@@ -109,17 +109,6 @@ public class dirent {
                 .append("RECLEN: ").append(d_reclen).append("; ")
                 .append("INO: ").append(d_ino).append("; ")
                 .append("OFF:").append(d_off);
-        return sb.toString();
-    }
-
-    private String getStringFromByteArray(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            if (bytes[i] == 0x00) {
-                break;
-            }
-            sb.append((char)bytes[i]);
-        }
         return sb.toString();
     }
 
