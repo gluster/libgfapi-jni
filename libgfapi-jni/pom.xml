@@ -35,124 +35,124 @@
     Hiram Chirino (thanks, Hiram!).  The leveldbjni project is hosted on github:
     https://github.com/fusesource/leveldbjni
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.peircean.libgfapi-jni</groupId>
-    <artifactId>libgfapi-project</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.peircean.libgfapi-jni</groupId>
+        <artifactId>libgfapi-project</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>libgfapi-jni</artifactId>
     <version>1.0-SNAPSHOT</version>
-  </parent>
+    <packaging>jar</packaging>
 
-  <groupId>com.peircean.libgfapi-jni</groupId>
-  <artifactId>libgfapi-jni</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  
-  <name>${project.artifactId}</name>
-  <description>libgfapi-jni is a jni library for accessing glusterfs via the libgfapi C library.</description>
-      
-  <properties>
-    <skipAutogen>false</skipAutogen>
-  </properties>
+    <name>${project.artifactId}</name>
+    <description>libgfapi-jni is a jni library for accessing glusterfs via the libgfapi C library.</description>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.fusesource.hawtjni</groupId>
-      <artifactId>hawtjni-runtime</artifactId>
-      <version>${hawtjni-version}</version>
-    </dependency>
-  </dependencies>
+    <properties>
+        <skipAutogen>false</skipAutogen>
+    </properties>
 
-  <build>
-    <resources>
-      <resource>
-        <directory>${project.basedir}/src/main/resources</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-    </resources>
-    <plugins>
+    <dependencies>
+        <dependency>
+            <groupId>org.fusesource.hawtjni</groupId>
+            <artifactId>hawtjni-runtime</artifactId>
+            <version>${hawtjni-version}</version>
+        </dependency>
+    </dependencies>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
 
-      <plugin>
-        <groupId>org.fusesource.hawtjni</groupId>
-        <artifactId>maven-hawtjni-plugin</artifactId>
-        <version>${hawtjni-version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-              <goal>package-source</goal>
-            </goals>
-          </execution>
-        </executions>        
-        <configuration>
-          <skipAutogen>${skipAutogen}</skipAutogen>
-          <name>libgfapi-jni</name>
-          <callbacks>false</callbacks>
-          <copyright><![CDATA[
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.fusesource.hawtjni</groupId>
+                <artifactId>maven-hawtjni-plugin</artifactId>
+                <version>${hawtjni-version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                            <goal>package-source</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skipAutogen>${skipAutogen}</skipAutogen>
+                    <name>libgfapi-jni</name>
+                    <callbacks>false</callbacks>
+                    <copyright><![CDATA[
 /*******************************************************************************
 * Copyright (C) 2013, Louis Zuckerman.
 *******************************************************************************/
           ]]></copyright>
-        </configuration>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.4.3</version>
-        <configuration>
-            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <forkMode>once</forkMode>
-            <argLine>-ea</argLine>
-            <failIfNoTests>false</failIfNoTests>
-            <workingDirectory>${project.build.directory}</workingDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </configuration>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <forkMode>once</forkMode>
+                    <argLine>-ea</argLine>
+                    <failIfNoTests>false</failIfNoTests>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
+                    <excludes>
+                        <exclude>**/*</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
