@@ -35,116 +35,117 @@
     Hiram Chirino (thanks, Hiram!).  The leveldbjni project is hosted on github:
     https://github.com/fusesource/leveldbjni
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.fusesource</groupId>
-    <artifactId>fusesource-pom</artifactId>
-    <version>1.9</version>
-  </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.fusesource</groupId>
+        <artifactId>fusesource-pom</artifactId>
+        <version>1.9</version>
+    </parent>
 
-  <groupId>com.peircean.libgfapi-jni</groupId>
-  <artifactId>libgfapi-project</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  
-  <name>${project.artifactId}</name>
-  <description>libgfapi-jni is a jni library for accessing glusterfs via the libgfapi C library.</description>
-  
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hawtjni-version>1.9</hawtjni-version>
-    <glusterfs.server>127.0.2.1</glusterfs.server>
-    <glusterfs.volume>foo</glusterfs.volume>
-    <client.logfile>/tmp/glfsjni.log</client.logfile>
-  </properties>
-  
-  <modules>
-    <module>libgfapi-jni</module>
-  </modules>
-  
-  <inceptionYear>2013</inceptionYear>
+    <groupId>com.peircean.libgfapi-jni</groupId>
+    <artifactId>libgfapi-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-  <developers>
-    <developer>
-      <id>chirino</id>
-      <name>Hiram Chirino</name>
-      <email>hiram@hiramchirino.com</email>
-      <url>http://hiramchirino.com</url>
-      <timezone>GMT-5</timezone>
-    </developer>
-    <developer>
-      <id>zuckerman</id>
-      <name>Louis Zuckerman</name>
-      <email>me@louiszuckerman.com</email>
-      <url>http://about.me/louiszuckerman</url>
-      <timezone>GMT-5</timezone>
-    </developer>
-  </developers>
-  
-  <dependencies>
-      <dependency>
-          <groupId>org.testng</groupId>
-          <artifactId>testng</artifactId>
-          <version>6.8.5</version>
-          <scope>test</scope>
-          <!--<classifier>jdk15</classifier>-->
-      </dependency>
+    <name>${project.artifactId}</name>
+    <description>libgfapi-jni is a jni library for accessing glusterfs via the libgfapi C library.</description>
 
-      <dependency>
-          <groupId>org.projectlombok</groupId>
-          <artifactId>lombok</artifactId>
-          <version>0.11.8</version>
-          <scope>provided</scope>
-      </dependency>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hawtjni-version>1.9</hawtjni-version>
+        <glusterfs.server>127.0.2.1</glusterfs.server>
+        <glusterfs.volume>foo</glusterfs.volume>
+        <client.logfile>/tmp/glfsjni.log</client.logfile>
+    </properties>
 
-  </dependencies>
-  
-  <build>
-    <plugins>
-    
-      <!-- the older clean plugin has trouble deleting directories with symlinks in them -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>2.3</version>
-      </plugin>
-      
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.4.3</version>
-        <configuration>
-          <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <forkMode>once</forkMode>
-          <argLine>-ea</argLine>
-          <failIfNoTests>false</failIfNoTests>
-          <workingDirectory>${project.build.directory}</workingDirectory>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
-        </configuration>
-      </plugin>      
-    </plugins>
-      <extensions>
-          <extension>
-              <groupId>org.kuali.maven.wagons</groupId>
-              <artifactId>maven-s3-wagon</artifactId>
-              <version>1.1.20</version>
-          </extension>
-      </extensions>
-  </build>
+    <modules>
+        <module>libgfapi-jni</module>
+    </modules>
+
+    <inceptionYear>2013</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>chirino</id>
+            <name>Hiram Chirino</name>
+            <email>hiram@hiramchirino.com</email>
+            <url>http://hiramchirino.com</url>
+            <timezone>GMT-5</timezone>
+        </developer>
+        <developer>
+            <id>zuckerman</id>
+            <name>Louis Zuckerman</name>
+            <email>me@louiszuckerman.com</email>
+            <url>http://about.me/louiszuckerman</url>
+            <timezone>GMT-5</timezone>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8.5</version>
+            <scope>test</scope>
+            <!--<classifier>jdk15</classifier>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>0.11.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- the older clean plugin has trouble deleting directories with symlinks in them -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <forkMode>once</forkMode>
+                    <argLine>-ea</argLine>
+                    <failIfNoTests>false</failIfNoTests>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.1.20</version>
+            </extension>
+        </extensions>
+    </build>
     <distributionManagement>
         <site>
             <id>s3.site</id>
@@ -160,114 +161,111 @@
         </snapshotRepository>
     </distributionManagement>
 
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jxr-maven-plugin</artifactId>
-        <version>2.0-beta-1</version>
-        <configuration>
-          <aggregate>true</aggregate>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <excludePackageNames>*.internal</excludePackageNames>
-          <linksource>true</linksource>
-          <links>
-            <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-          </links>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.1.1</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>index</report>
-              <report>sumary</report>
-              <report>plugins</report>
-              <report>dependencies</report>
-              <report>mailing-list</report>
-              <report>issue-tracking</report>
-              <report>license</report>
-              <report>scm</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>surefire-report-maven-plugin</artifactId>
-        <version>2.0-beta-1</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>2.5</version>
-      </plugin>
-    </plugins>
-  </reporting>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+                <version>2.0-beta-1</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <excludePackageNames>*.internal</excludePackageNames>
+                    <linksource>true</linksource>
+                    <links>
+                        <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+                    </links>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.1.1</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>sumary</report>
+                            <report>plugins</report>
+                            <report>dependencies</report>
+                            <report>mailing-list</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>surefire-report-maven-plugin</artifactId>
+                <version>2.0-beta-1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
-  <profiles>
-    
-    <profile>
-      <id>download</id>
-      <repositories>
-        <repository>
-          <id>fusesource.nexus.snapshot</id>
-          <name>FuseSource Community Snapshot Repository</name>
-          <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
-        </repository>
-        <repository>
-          <id>sonatype-nexus</id>
-          <name>Sonatype Nexus</name>
-          <url>https://oss.sonatype.org/content/repositories/public</url>
-          <releases><enabled>true</enabled></releases>
-          <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-      </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-          <id>fusesource.nexus.snapshot</id>
-          <name>FuseSource Community Snapshot Repository</name>
-          <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
-        </pluginRepository>
-      </pluginRepositories>
-    </profile>
-    
-    <profile>
-      <id>full</id>
-      <modules>
-        <module>libgfapi-linux32</module>
-        <module>libgfapi-linux64</module>
-        <module>libgfapi-all</module>
-      </modules>
-    </profile>    
+    <profiles>
 
-    <profile>
-      <id>all</id>
-      <modules>
-        <module>libgfapi-all</module>
-      </modules>
-    </profile>    
-    <profile>
-      <id>linux32</id>
-      <modules>
-        <module>libgfapi-linux32</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>linux64</id>
-      <modules>
-        <module>libgfapi-linux64</module>
-      </modules>
-    </profile>
+        <profile>
+            <id>download</id>
+            <repositories>
+                <repository>
+                    <id>fusesource.nexus.snapshot</id>
+                    <name>FuseSource Community Snapshot Repository</name>
+                    <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
+                </repository>
+                <repository>
+                    <id>sonatype-nexus</id>
+                    <name>Sonatype Nexus</name>
+                    <url>https://oss.sonatype.org/content/repositories/public</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>fusesource.nexus.snapshot</id>
+                    <name>FuseSource Community Snapshot Repository</name>
+                    <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
 
-  </profiles>
+        <profile>
+            <id>full</id>
+            <modules>
+                <module>libgfapi-linux64</module>
+                <module>libgfapi-all</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>all</id>
+            <modules>
+                <module>libgfapi-all</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>linux64</id>
+            <modules>
+                <module>libgfapi-linux64</module>
+            </modules>
+        </profile>
+
+    </profiles>
 </project>
