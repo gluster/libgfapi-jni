@@ -201,5 +201,10 @@ public class GLFS {
             @JniArg(cast = "glfs_fd_t *") long fd
     );
 
-
+    //    int glfs_rename (glfs_t *fs, const char *oldpath, const char *newpath);
+    public static final native int glfs_rename(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String oldpath,
+            @JniArg(cast = "const char *") String newpath
+    );
 }

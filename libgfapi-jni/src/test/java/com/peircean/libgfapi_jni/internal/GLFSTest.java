@@ -49,6 +49,7 @@ import static org.testng.AssertJUnit.assertTrue;
 public class GLFSTest {
 
     public static final String PATH = "bar";
+    public static final String PATH_RENAMED = "bar2";
     public static final String HELLO_ = "hello ";
     public static final String WORLD = "world";
     private long vol;
@@ -308,9 +309,17 @@ public class GLFSTest {
         assertEquals(0, close);
     }
 
+
     @Test(dependsOnMethods = "testClosedir")
+    public void testRename() {
+        int rename = glfs_rename(vol, PATH, PATH_RENAMED);
+        System.out.println("RENAME: " + rename);
+        assertEquals(0, rename);
+    }
+
+    @Test(dependsOnMethods = "testRename")
     public void testUnlink() {
-        int unl = glfs_unlink(vol, PATH);
+        int unl = glfs_unlink(vol, PATH_RENAMED);
         System.out.println("UNLINK: " + unl);
         assertEquals(0, unl);
     }
