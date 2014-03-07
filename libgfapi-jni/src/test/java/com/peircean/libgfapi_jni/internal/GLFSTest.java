@@ -341,7 +341,7 @@ public class GLFSTest {
     public void testFini() {
         int fini = glfs_fini(vol);
         System.out.println("FINI: " + fini);
-        assertEquals(-1, fini);
+        assertEquals(0, fini);
     }
 
 }
