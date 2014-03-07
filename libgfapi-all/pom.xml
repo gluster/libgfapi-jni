@@ -41,11 +41,11 @@
     <parent>
         <groupId>com.peircean.libgfapi-jni</groupId>
         <artifactId>libgfapi-project</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>libgfapi-all</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>${project.artifactId}</name>
@@ -55,13 +55,13 @@
         <dependency>
             <groupId>com.peircean.libgfapi-jni</groupId>
             <artifactId>libgfapi-jni</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.peircean.libgfapi-jni</groupId>
             <artifactId>libgfapi-linux64</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -106,7 +106,7 @@
                 <dependency>
                     <groupId>com.peircean.libgfapi-jni</groupId>
                     <artifactId>libgfapi-jni</artifactId>
-                    <version>1.0</version>
+                    <version>1.1-SNAPSHOT</version>
                     <classifier>sources</classifier>
                     <optional>true</optional>
                 </dependency>
