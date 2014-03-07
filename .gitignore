@@ -16,3 +16,6 @@ glfsjni.log
 .clover
 dependency-reduced-pom.xml
 release.properties
+pom.xml.next
+pom.xml.releaseBackup
+pom.xml.tag
