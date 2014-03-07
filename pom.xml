@@ -67,6 +67,10 @@
 
     <inceptionYear>2013</inceptionYear>
 
+    <scm>
+        <developerConnection>scm:git:https://github.com/semiosis/libgfapi-jni.git</developerConnection>
+    </scm>
+
     <developers>
         <developer>
             <id>chirino</id>
@@ -136,6 +140,11 @@
                         <include>**/*Test.java</include>
                     </includes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
             </plugin>
         </plugins>
         <extensions>

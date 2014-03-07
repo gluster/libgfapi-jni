@@ -12,4 +12,7 @@ target
 .settings
 eclipse-classes
 glfsjni.log
-
+.vagrant
+.clover
+dependency-reduced-pom.xml
+release.properties
