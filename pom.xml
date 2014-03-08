@@ -46,7 +46,7 @@
 
     <groupId>com.peircean.libgfapi-jni</groupId>
     <artifactId>libgfapi-project</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -78,7 +78,7 @@
         <url>https://github.com/semiosis/libgfapi-jni</url>
         <connection>scm:git:https://github.com/semiosis/libgfapi-jni.git</connection>
         <developerConnection>scm:git:https://github.com/semiosis/libgfapi-jni.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>libgfapi-project-1.0.1</tag>
     </scm>
 
     <developers>
