@@ -46,11 +46,19 @@
 
     <groupId>com.peircean.libgfapi-jni</groupId>
     <artifactId>libgfapi-project</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <description>libgfapi-jni is a jni library for accessing glusterfs via the libgfapi C library.</description>
+    <licenses>
+        <license>
+            <name>BSD-style</name>
+            <url>https://github.com/semiosis/libgfapi-jni/blob/master/license.txt</url>
+            <comments>A permissive open source license</comments>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,9 +75,11 @@
     <inceptionYear>2013</inceptionYear>
 
     <scm>
+        <url>https://github.com/semiosis/libgfapi-jni</url>
+        <connection>scm:git:https://github.com/semiosis/libgfapi-jni.git</connection>
         <developerConnection>scm:git:https://github.com/semiosis/libgfapi-jni.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <developers>
         <developer>
