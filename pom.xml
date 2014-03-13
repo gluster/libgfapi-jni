@@ -39,9 +39,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.fusesource</groupId>
-        <artifactId>fusesource-pom</artifactId>
-        <version>1.9</version>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
     </parent>
 
     <groupId>com.peircean.libgfapi-jni</groupId>
@@ -160,20 +160,6 @@
             </extension>
         </extensions>
     </build>
-    <distributionManagement>
-        <site>
-            <id>s3.site</id>
-            <url>s3://maven.peircean.com/site</url>
-        </site>
-        <repository>
-            <id>s3.release</id>
-            <url>s3://maven.peircean.com/release</url>
-        </repository>
-        <snapshotRepository>
-            <id>s3.snapshot</id>
-            <url>s3://maven.peircean.com/snapshot</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <reporting>
         <plugins>
