@@ -63,7 +63,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hawtjni-version>1.9</hawtjni-version>
-        <glusterfs.server>127.0.2.1</glusterfs.server>
+        
+        <!-- The tests connect to the vagrant box provided by glusterfs-java-filesystem -->
+        <!-- so that needs to be running in order for the tests to run. -->
+        <glusterfs.server>172.31.31.31</glusterfs.server>
         <glusterfs.volume>foo</glusterfs.volume>
         <client.logfile>/tmp/glfsjni.log</client.logfile>
     </properties>
