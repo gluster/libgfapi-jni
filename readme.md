@@ -11,6 +11,7 @@ Java Native Interface (JNI) bindings for libgfapi, the GlusterFS client API.
 * gluster 3.4 or newer - installed from source or a gluster development package installed.
 * maven 3.0.3 or newer
 * auto tool chain
+* Ubuntu packages: build-essential libtool pkg-config automake
 
 ## Compiling without tests
 
