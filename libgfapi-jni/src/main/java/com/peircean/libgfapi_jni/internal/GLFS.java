@@ -186,25 +186,46 @@ public class GLFS {
     );
 
     //    long glfs_telldir (glfs_fd_t *fd);
+    @JniMethod
     public static final native long glfs_telldir(
             @JniArg(cast = "glfs_fd_t *") long fd
     );
 
     //    void glfs_seekdir (glfs_fd_t *fd, long offset);
+    @JniMethod
     public static final native void glfs_seekdir(
             @JniArg(cast = "glfs_fd_t *") long fd,
             long offset
     );
 
     //    int glfs_closedir (glfs_fd_t *fd);
+    @JniMethod
     public static final native int glfs_closedir(
             @JniArg(cast = "glfs_fd_t *") long fd
     );
 
     //    int glfs_rename (glfs_t *fs, const char *oldpath, const char *newpath);
+    @JniMethod
     public static final native int glfs_rename(
             @JniArg(cast = "glfs_t *") long fs,
             @JniArg(cast = "const char *") String oldpath,
             @JniArg(cast = "const char *") String newpath
+    );
+
+    //    int glfs_symlink (glfs_t *fs, const char *oldpath, const char *newpath);
+    @JniMethod
+    public static final native int glfs_symlink (
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String oldpath,
+            @JniArg(cast = "const char *") String newpath
+    );
+
+    //    int glfs_readlink (glfs_t *fs, const char *path, char *buf, size_t bufsiz);
+    @JniMethod
+    public static final native int glfs_readlink (
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path,
+            @JniArg(cast = "char *", flags = NO_IN) byte[] buf,
+            @JniArg(cast = "size_t") long bufsiz
     );
 }

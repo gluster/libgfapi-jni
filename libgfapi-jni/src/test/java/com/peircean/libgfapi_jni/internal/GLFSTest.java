@@ -52,6 +52,8 @@ public class GLFSTest {
     public static final String PATH_RENAMED = "bar2";
     public static final String HELLO_ = "hello ";
     public static final String WORLD = "world";
+    public static final String SYMLINK = "/symlink";
+    public static final String SYMLINK_TARGET = "/symlink_target";
     private long vol;
     private long file;
     private long dir;
@@ -121,6 +123,28 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testCreate")
+    public void testSymlink() {
+        int sym = glfs_symlink(vol, SYMLINK_TARGET, SYMLINK);
+        System.out.println("SYMLINK create: " + sym);
+        assertEquals(0, sym);
+    }
+
+    @Test(dependsOnMethods = "testSymlink")
+    public void testReadlink() {
+        int length = SYMLINK_TARGET.length();
+        byte[] content = new byte[length];
+        long read = glfs_readlink(vol, SYMLINK, content, length);
+
+        String readValue = new String(content);
+        System.out.println("SYMLINK val: " + readValue);
+        System.out.println("SYMLINK len: " + read);
+
+        assertEquals(length, read);
+        assertEquals(SYMLINK_TARGET, readValue);
+
+    }
+
+    @Test(dependsOnMethods = "testReadlink")
     public void testWriteNew() {
         int length = HELLO_.length();
         int write = glfs_write(file, HELLO_.getBytes(), length, 0);
@@ -321,6 +345,10 @@ public class GLFSTest {
     public void testUnlink() {
         int unl = glfs_unlink(vol, PATH_RENAMED);
         System.out.println("UNLINK: " + unl);
+        assertEquals(0, unl);
+
+        unl = glfs_unlink(vol, SYMLINK);
+        System.out.println("UNLINK SYMLINK: " + unl);
         assertEquals(0, unl);
     }
 
