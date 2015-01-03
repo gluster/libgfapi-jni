@@ -204,6 +204,13 @@ public class GLFS {
             @JniArg(cast = "glfs_fd_t *") long fd
     );
 
+    //    int glfs_rmdir(glfs_t *fs, const char *path);
+    @JniMethod
+    public static final native int glfs_rmdir(
+            @JniArg(cast = "glfs_t *") long fs,
+            @JniArg(cast = "const char *") String path
+    );
+
     //    int glfs_rename (glfs_t *fs, const char *oldpath, const char *newpath);
     @JniMethod
     public static final native int glfs_rename(
