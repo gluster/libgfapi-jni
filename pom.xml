@@ -46,7 +46,7 @@
 
     <groupId>com.peircean.libgfapi-jni</groupId>
     <artifactId>libgfapi-project</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
