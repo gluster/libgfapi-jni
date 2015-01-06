@@ -56,6 +56,7 @@ public class GLFSTest {
     public static final String WORLD = "world";
     public static final String SYMLINK = "/symlink";
     public static final String SYMLINK_TARGET = "/symlink_target";
+    public static stat stat = new stat();
     private long vol;
     private long file;
     private long dir;
@@ -234,6 +235,23 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testStats")
+    public void testChmod() {
+        int ret = glfs_chmod(vol, FILE_PATH, 0664);
+        stat newStat = new stat();
+        glfs_stat(vol, FILE_PATH, newStat);
+
+        int newMode = newStat.st_mode;
+        int oldMode = stat.st_mode;
+
+        System.out.println("CHMOD " + (ret == 0 ? "success" : "failure"));
+        System.out.println("CHMOD old mode: " + oldMode);
+        System.out.println("CHMOD new mode: " + newMode);
+
+        assertTrue(newMode != oldMode);
+        assertEquals(newMode, 33204);
+    }
+
+    @Test(dependsOnMethods = "testChmod")
     public void testFromGlfd() {
         long glfs = glfs_from_glfd(file);
         System.out.println("GLFS_GLFD: " + glfs);
