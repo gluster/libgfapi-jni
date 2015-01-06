@@ -80,7 +80,7 @@
     <scm>
         <url>https://github.com/semiosis/libgfapi-jni</url>
         <connection>scm:git:https://github.com/semiosis/libgfapi-jni.git</connection>
-        <developerConnection>scm:git:https://github.com/semiosis/libgfapi-jni.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/semiosis/libgfapi-jni.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
