@@ -103,6 +103,13 @@ public class GLFSTest {
     }
 
     @Test(dependsOnMethods = "testInit")
+    public void testMkdir() {
+        int ret = glfs_mkdir(vol, DIR_PATH, 0777);
+        System.out.println("CREATE STATUS: " + ret);
+        assertEquals(0, ret);
+    }
+
+    @Test(dependsOnMethods = "testMkdir")
     public void testOpen_nonExisting() {
         file = glfs_open(vol, FILE_PATH, 0);
         System.out.println("OPEN: " + file);
