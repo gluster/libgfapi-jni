@@ -49,7 +49,6 @@ AC_DEFUN([CUSTOM_M4_SETUP],
       AC_SUBST(CXXFLAGS)
       LDFLAGS="$LDFLAGS -lgfapi -L${withval}/lib"
       AC_SUBST(LDFLAGS)
-    ],[
     ]
   )
   
