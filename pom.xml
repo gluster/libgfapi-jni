@@ -62,7 +62,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hawtjni-version>1.9</hawtjni-version>
+        <hawtjni-version>1.14</hawtjni-version>
         
         <!-- The tests connect to the vagrant box provided by glusterfs-java-filesystem -->
         <!-- so that needs to be running in order for the tests to run. -->
@@ -73,6 +73,7 @@
 
     <modules>
         <module>libgfapi-jni</module>
+        <module>libgfapi-linux64</module>
     </modules>
 
     <inceptionYear>2013</inceptionYear>
@@ -113,7 +114,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>0.11.8</version>
+            <version>1.16.10</version>
             <scope>provided</scope>
         </dependency>
 
@@ -219,50 +220,8 @@
     </reporting>
 
     <profiles>
-
-        <profile>
-            <id>download</id>
-            <repositories>
-                <repository>
-                    <id>fusesource.nexus.snapshot</id>
-                    <name>FuseSource Community Snapshot Repository</name>
-                    <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
-                </repository>
-                <repository>
-                    <id>sonatype-nexus</id>
-                    <name>Sonatype Nexus</name>
-                    <url>https://oss.sonatype.org/content/repositories/public</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>fusesource.nexus.snapshot</id>
-                    <name>FuseSource Community Snapshot Repository</name>
-                    <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-
-        <profile>
-            <id>full</id>
-            <modules>
-                <module>libgfapi-linux64</module>
-                <module>libgfapi-all</module>
-            </modules>
-        </profile>
-
         <profile>
             <id>release</id>
-            <modules>
-                <module>libgfapi-linux64</module>
-                <module>libgfapi-all</module>
-            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -290,19 +249,5 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <id>all</id>
-            <modules>
-                <module>libgfapi-all</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>linux64</id>
-            <modules>
-                <module>libgfapi-linux64</module>
-            </modules>
-        </profile>
-
     </profiles>
 </project>
