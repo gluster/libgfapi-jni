@@ -40,9 +40,6 @@ import org.fusesource.hawtjni.runtime.Library;
 import static org.fusesource.hawtjni.runtime.ArgFlag.NO_IN;
 import static org.fusesource.hawtjni.runtime.ArgFlag.NO_OUT;
 
-/**
- * @author <a href="http://hiramchirino.com">Hiram Chirino</a> & <a href="http://about.me/louiszuckerman">Louis Zuckerman</a>
- */
 @JniClass
 public class GLFS {
 
